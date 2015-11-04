@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include "Direct3DBase.h"
+#include "VectorBoard.h"	// Includes VectorCell.h
+#include "Slider.h"
 
-// This class renders a simple spinning cube.
 ref class Renderer sealed : public Direct3DBase
 {
 public:
@@ -17,7 +18,7 @@ public:
 	void Update(float timeTotal, float timeDelta);
 
 private:
-	bool m_loadingComplete;
-
-	uint32 m_indexCount;
+	ID3D11ShaderResourceView* arrowTexture;
+	Sprite* arrow;
+	VectorBoard vectorBoard;
 };

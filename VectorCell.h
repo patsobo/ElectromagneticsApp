@@ -1,18 +1,15 @@
 #pragma once
 
-#include "SpriteBatch.h"
 #include "Sprite.h"
 #include "DDSTextureLoader.h"
 #include <D3D11.h>
 #include "Windows.h"
 #include <list>
 #include <vector>
-#include "Spritesheet.h"
 
 using namespace DirectX;
-using namespace std;
 
-const float maxStrength = 100;
+static int MAX_STRENGTH = 100;
 
 class VectorCell {
 	public:
@@ -21,14 +18,14 @@ class VectorCell {
 		void Update(float timeTotal, float timeDelta);
 		void Draw(SpriteBatch* spriteBatch);
 		
-		void setVector(XMFLOAT2 newVector);
+		void setFieldLine(XMFLOAT2 newFieldLine);
 		
 	private:
 		Sprite* arrow;
 		float opacity;
 		float rotation;
-		XMFLOAT2 vector;
+		XMFLOAT2 fieldLine;
 		XMFLOAT2 position;
 		
 		void updateOpacityRotation();
-}
+};

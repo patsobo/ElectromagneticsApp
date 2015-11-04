@@ -33,6 +33,7 @@ class Slider {
 		void handleTouch(XMFLOAT2 point);
 		int calculateValue();
 		int calculateDivot(XMFLOAT2 point);
+		float getDivotPosition();
 		
 	//protected: 
-}
+};

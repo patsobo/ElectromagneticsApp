@@ -12,17 +12,16 @@
 using namespace DirectX;
 using namespace std;
 
-const float maxStrength = 100;
-
 class VectorBoard {
 	public:
-		VectorBoard(Sprite* arrow, XMFLOAT2 boardSize);
+		VectorBoard(Sprite* arrow, XMFLOAT2 boardSize, Windows::Foundation::Rect* movementBounds);
 		
-		void Update(float timeTotal, timeDelta, vector<ElectricObject> electricObjects);
+		void Update(float timeTotal, float timeDelta, vector<ElectricObject> electricObjects);
 		void Draw(SpriteBatch* spriteBatch);
 		
 	private:
-		vector<vector<VectorCell>> board; 
+		Windows::Foundation::Rect* movementBounds;
+		vector<vector<VectorCell*>> board; 
 		
 		XMFLOAT2 VectorBoard::calculateSum(int i, int j, vector<ElectricObject> electricObjects);
-}
+};
