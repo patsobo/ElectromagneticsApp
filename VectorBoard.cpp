@@ -9,8 +9,8 @@ using namespace std;
 VectorBoard::VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardSize, Windows::Foundation::Rect* movementBounds) {
 	this->movementBounds = movementBounds;
 
-	//XMFLOAT2 unitLength = XMFLOAT2(movementBounds->Width / boardSize.x, movementBounds->Height / boardSize.y);
-	XMFLOAT2 unitLength = XMFLOAT2(60, 60);
+	XMFLOAT2 unitLength = XMFLOAT2(movementBounds->Width / boardSize.x, movementBounds->Height / boardSize.y);
+	//XMFLOAT2 unitLength = XMFLOAT2(60, 60);
 	XMFLOAT2 origin = XMFLOAT2(0, 457 * .1 / 2);
 	for (int i = 0; i < boardSize.x; i++) {
 		vector<VectorCell*> row;

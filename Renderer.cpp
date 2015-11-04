@@ -25,7 +25,8 @@ void Renderer::CreateWindowSizeDependentResources()
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/arrow.dds", nullptr, &arrowTexture, MAXSIZE_T);
 	arrow = new Sprite(arrowTexture, XMFLOAT2(600, 457), XMFLOAT2(0, 0), &m_windowBounds, scale);
 
-	vectorBoard = new VectorBoard(arrowTexture, XMFLOAT2(4, 4), &m_windowBounds);
+	XMFLOAT2 boardSize = XMFLOAT2(int(m_windowBounds.Width / 60), int(m_windowBounds.Height / 45.7));
+	vectorBoard = new VectorBoard(arrowTexture, boardSize, &m_windowBounds);
 }
 
 void Renderer::Update(float timeTotal, float timeDelta)

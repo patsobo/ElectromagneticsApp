@@ -2,8 +2,14 @@
 #include "ElectricObject.h"
 
 
+// TODO: Make ElectricObject a child of Sprite
+
 ElectricObject::ElectricObject()
 {
+}
+
+void ElectricObject::isTouched(XMFLOAT2 point) {
+	//setPosition(point);
 }
 
 vector<vector<XMFLOAT2>> ElectricObject::getGrid() {

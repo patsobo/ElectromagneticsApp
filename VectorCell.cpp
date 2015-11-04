@@ -8,7 +8,7 @@ using namespace DirectX;
 VectorCell::VectorCell(Sprite* arrow, XMFLOAT2 position) {
 	this->arrow = arrow;
 	this->position = position;
-		
+	
 	fieldLine = XMFLOAT2(0, 0);
 	updateOpacityRotation();				
 }
