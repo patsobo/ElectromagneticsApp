@@ -18,6 +18,9 @@ class VectorBoard {
 		
 		void Update(float timeTotal, float timeDelta, vector<ElectricObject> electricObjects);
 		void Draw(SpriteBatch* spriteBatch);
+
+		// Test method
+		void addField(XMFLOAT2 field);
 		
 	private:
 		Windows::Foundation::Rect* movementBounds;

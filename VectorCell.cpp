@@ -26,7 +26,17 @@ void VectorCell::Draw(SpriteBatch* spriteBatch) {
 	
 void VectorCell::updateOpacityRotation() {
 	float pi = atan(1) * 4;
-	rotation = atan(-1 * fieldLine.y / fieldLine.x);	// In radians; also, it's negative b/c y goes downward as positive (upwards is more intuitive)
+	if (fieldLine.x == 0) {
+		rotation = pi / 2;
+		if (fieldLine.y > 0)	// Actually means it's negative (going down)
+			rotation += pi;
+	}
+	else
+		rotation = atan(-1 * fieldLine.y / fieldLine.x);	// In radians; also, it's negative b/c y goes downward as positive (upwards is more intuitive)
+	// Statements to account for quadrants
+	if (fieldLine.x < 0)
+		rotation += pi;
+
 	opacity = sqrt(pow(fieldLine.x, 2) + pow(fieldLine.y, 2)) / MAX_STRENGTH;
 	if (opacity > 1)
 		opacity = 1;
@@ -35,3 +45,6 @@ void VectorCell::updateOpacityRotation() {
 }
 	
 void VectorCell::setFieldLine(XMFLOAT2 newFieldLine) { fieldLine = newFieldLine; }
+
+// TODO: TEST
+XMFLOAT2 VectorCell::getFieldLine() { return fieldLine; }

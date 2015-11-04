@@ -27,7 +27,7 @@ void VectorBoard::Update(float timeTotal, float timeDelta, vector<ElectricObject
 	for(int i=0; i<board.size(); i++) {
 		for(int j =0; j<board[i].size();j++) {
 			VectorCell* cell = board[i][j];
-			cell->setFieldLine(calculateSum(i, j, electricObjects));
+			//cell->setFieldLine(calculateSum(i, j, electricObjects));
 			cell->Update(timeTotal, timeDelta);
 		}
 	}
@@ -43,6 +43,7 @@ void VectorBoard::Draw(SpriteBatch* spriteBatch) {
 	}
 }
 	
+// TODO: Impelement and add to Update function
 XMFLOAT2 VectorBoard::calculateSum(int i, int j, vector<ElectricObject> electricObjects){
 	XMFLOAT2 sum = XMFLOAT2(0, 0);
 	for (ElectricObject thing : electricObjects) {
@@ -52,4 +53,15 @@ XMFLOAT2 VectorBoard::calculateSum(int i, int j, vector<ElectricObject> electric
 	}	
 		
 	return sum;
+}
+
+
+// TODO: TEST METHOD ONLY.  DELETE WHEN FINISHED
+void VectorBoard::addField(XMFLOAT2 field) {
+	for (int i = 0; i<board.size(); i++) {
+		for (int j = 0; j<board[i].size(); j++) {
+			VectorCell* cell = board[i][j];
+			cell->setFieldLine(XMFLOAT2(cell->getFieldLine().x + field.x, cell->getFieldLine().y + field.y));
+		}
+	}
 }

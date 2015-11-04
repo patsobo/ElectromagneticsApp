@@ -92,17 +92,21 @@ void ElectromagneticsApp::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs
 
 void ElectromagneticsApp::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
-	// Insert your code here.
+	Windows::UI::Input::PointerPoint^ currentPoint = args->CurrentPoint;
+	m_renderer->HandlePressInput(currentPoint);
 }
 
 void ElectromagneticsApp::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 {
 	// Insert your code here.
+	Windows::UI::Input::PointerPoint^ currentPoint = args->CurrentPoint;
+	m_renderer->HandleMoveInput(currentPoint);
 }
 
 void ElectromagneticsApp::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 {
-	// Insert your code here.
+	Windows::UI::Input::PointerPoint^ currentPoint = args->CurrentPoint;
+	m_renderer->HandleReleaseInput(currentPoint);
 }
 
 void ElectromagneticsApp::OnActivated(CoreApplicationView^ applicationView, IActivatedEventArgs^ args)

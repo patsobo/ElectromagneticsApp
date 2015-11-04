@@ -9,7 +9,7 @@
 
 using namespace DirectX;
 
-static int MAX_STRENGTH = 2;
+static int MAX_STRENGTH = 25;
 
 class VectorCell {
 	public:
@@ -19,6 +19,9 @@ class VectorCell {
 		void Draw(SpriteBatch* spriteBatch);
 		
 		void setFieldLine(XMFLOAT2 newFieldLine);
+
+		// TODO: TEST METHOD ONLY
+		XMFLOAT2 getFieldLine();
 		
 	private:
 		Sprite* arrow;
