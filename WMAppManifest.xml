@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
+  <DefaultLanguage xmlns="" code="en-US"/>
+  <App xmlns="" ProductID="{f8b28f5d-b18c-4789-affa-255474f8b5ef}" Title="ElectromagneticsApp" RuntimeType="Modern Native" Version="1.0.0.0" Genre="apps.normal"  Author="ElectromagneticsApp author" Description="Simple Direct3D application" Publisher="ElectromagneticsApp" PublisherID="{1a6c9a45-37d9-42b2-b6ac-0bb97721a184}">
+    <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
+      <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
+    </Capabilities>
+    <Tasks>
+      <DefaultTask Name="_default" ImagePath="ElectromagneticsApp.exe" ImageParams="" />
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="ElectromagneticsAppToken" TaskName="_default">
+        <TemplateFlip>
+          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
+          <Count>0</Count>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
+          <Title>ElectromagneticsApp</Title>
+          <BackContent></BackContent>
+          <BackBackgroundImageURI></BackBackgroundImageURI>
+          <BackTitle></BackTitle>
+          <DeviceLockImageURI></DeviceLockImageURI>
+          <HasLarge></HasLarge>
+        </TemplateFlip>
+      </PrimaryToken>
+    </Tokens>
+    <ScreenResolutions>
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
+      <ScreenResolution Name="ID_RESOLUTION_WXGA" />
+      <ScreenResolution Name="ID_RESOLUTION_HD720P" />
+    </ScreenResolutions>
+  </App>
+</Deployment>
