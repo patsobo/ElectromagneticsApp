@@ -26,9 +26,9 @@ class Sprite
 public:
 
 	Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, float scale = 1,
-		float Speed = 0);
+		float Speed = 0, XMFLOAT2 origin = XMFLOAT2(0, 0));
 	Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMVECTORF32* color,
-		float scale = 1, float Speed = 0);
+		float scale = 1, float Speed = 0, XMFLOAT2 origin = XMFLOAT2(0, 0));
 	//Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, float scale);
 	Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, int rows, int columns,
 		double framesPerSecond, int dividers[]);
@@ -52,6 +52,8 @@ public:
 	void reset();
 	void adjustPosition();
 	void setPosition(XMFLOAT2 newPosition);
+	void setOpacity(float newOpacity);
+	void setRotation(float newRotation);
 
 private:
 	Spritesheet spritesheet;
@@ -66,6 +68,7 @@ private:
 	double timeSinceLastFrame;
 	float scale;
 	float rotation;
+	XMFLOAT2 origin;
 
 	// TODO: Get rid of size (spritesheet handles that now)
 	Windows::Foundation::Rect* movementBounds;

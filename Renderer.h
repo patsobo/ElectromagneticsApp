@@ -18,7 +18,9 @@ public:
 	void Update(float timeTotal, float timeDelta);
 
 private:
+	unique_ptr<SpriteBatch> m_spriteBatch;
+
 	ID3D11ShaderResourceView* arrowTexture;
 	Sprite* arrow;
-	VectorBoard vectorBoard;
+	VectorBoard* vectorBoard;
 };

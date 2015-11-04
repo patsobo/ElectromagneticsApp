@@ -4,7 +4,7 @@
 using namespace DirectX;
 using namespace std;
 
-Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, float scale, float Speed) :
+Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, float scale, float Speed, XMFLOAT2 origin) :
 m_Texture(m_Texture), size(size), position(position), movementBounds(movementBounds), rows(1), columns(1), framesPerSecond(1), Velocity(XMFLOAT2(0, 0))
 {
 	this->position = position;
@@ -15,6 +15,7 @@ m_Texture(m_Texture), size(size), position(position), movementBounds(movementBou
 	this->initialPosition = position;
 	this->spritesheet = Spritesheet(size);
 	this->color = Colors::White;
+	this->origin = origin;
 
 	animationState = 0;
 	currentFrame = 0;
@@ -26,7 +27,7 @@ m_Texture(m_Texture), size(size), position(position), movementBounds(movementBou
 	spriteEffects = SpriteEffects_None;
 }
 
-Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMVECTORF32* color, float scale, float Speed) :
+Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMVECTORF32* color, float scale, float Speed, XMFLOAT2 origin) :
 m_Texture(m_Texture), size(size), position(position), movementBounds(movementBounds), rows(1), columns(1), framesPerSecond(1), Velocity(XMFLOAT2(0, 0))
 {
 	this->position = position;
@@ -37,6 +38,7 @@ m_Texture(m_Texture), size(size), position(position), movementBounds(movementBou
 	this->initialPosition = position;
 	this->spritesheet = Spritesheet(size);
 	this->color = *color;
+	this->origin = origin;
 
 	animationState = 0;
 	currentFrame = 0;
@@ -94,6 +96,7 @@ Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 posi
 	timeSinceLastFrame = 0;
 	rotation = 0.0f;
 	spriteEffects = SpriteEffects_None;
+	origin = XMFLOAT2(0, 0);
 }
 
 Sprite::Sprite(Spritesheet* spritesheet, ID3D11ShaderResourceView *m_Texture, XMFLOAT2 position,
@@ -114,6 +117,7 @@ Sprite::Sprite(Spritesheet* spritesheet, ID3D11ShaderResourceView *m_Texture, XM
 	BoundingBox = CreateBoundingBoxFromPosition(this->position);
 	timeSinceLastFrame = 0;
 	spriteEffects = SpriteEffects_None;
+	origin = XMFLOAT2(0, 0);
 }
 
 void Sprite::Draw(SpriteBatch* spriteBatch)
@@ -140,7 +144,7 @@ void Sprite::Draw(SpriteBatch* spriteBatch)
 	sourceRectangle->bottom = spritesheet.currentPosition.y + spritesheet.currentSize.y;
 
 	spriteBatch->Draw(m_Texture, XMFLOAT2(position.x, position.y),
-		sourceRectangle, color, rotation, XMFLOAT2(0.0f, 0.0f),
+		sourceRectangle, color, rotation, origin,
 		XMFLOAT2(getWidth() / imageWidth, getHeight() / imageHeight),
 		spriteEffects, 0.0f);
 }
@@ -300,3 +304,11 @@ void Sprite::setVelocity(XMFLOAT2 newVelocity)
 }
 Windows::Foundation::Rect* Sprite::getBoundingBox() { return BoundingBox; }
 void Sprite::setPosition(XMFLOAT2 newPosition) { position = newPosition; }
+void Sprite::setRotation(float newRotation) { rotation = newRotation; }
+void Sprite::setOpacity(float newOpacity) {
+	if (newOpacity >= 0 && newOpacity <= 1) {
+		XMVECTORF32 newColor = { color[0], color[1], color[2], newOpacity };
+		color = newColor;
+		return;
+	}
+}

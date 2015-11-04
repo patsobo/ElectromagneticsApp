@@ -14,7 +14,7 @@ using namespace std;
 
 class VectorBoard {
 	public:
-		VectorBoard(Sprite* arrow, XMFLOAT2 boardSize, Windows::Foundation::Rect* movementBounds);
+		VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardSize, Windows::Foundation::Rect* movementBounds);
 		
 		void Update(float timeTotal, float timeDelta, vector<ElectricObject> electricObjects);
 		void Draw(SpriteBatch* spriteBatch);
