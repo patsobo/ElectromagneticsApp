@@ -2,3 +2,4 @@ Assets/*
 Debug/*
 Generated Files/*
 *.vcxproj*
+ARM/*

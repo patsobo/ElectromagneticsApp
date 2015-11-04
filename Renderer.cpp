@@ -5,6 +5,7 @@ using namespace DirectX;
 using namespace Microsoft::WRL;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
+using namespace Windows::Graphics::Display;
 
 Renderer::Renderer() {
 	xSwipeCounter = 0;
@@ -21,15 +22,19 @@ void Renderer::CreateWindowSizeDependentResources()
 {
 	Direct3DBase::CreateWindowSizeDependentResources();
 
+	float scale = DisplayProperties::LogicalDpi / 96.0f;
+	m_windowBounds.Height *= scale;
+	m_windowBounds.Width *= scale;
+
 	m_spriteBatch = unique_ptr<SpriteBatch>(new DirectX::SpriteBatch(m_d3dContext.Get()));
 
 	// Create the arrow
 	arrowTexture = nullptr;
-	float scale = .1;
+	scale = .1;
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/arrow.dds", nullptr, &arrowTexture, MAXSIZE_T);
 	arrow = new Sprite(arrowTexture, XMFLOAT2(600, 457), XMFLOAT2(0, 0), &m_windowBounds, scale);
 
-	XMFLOAT2 boardSize = XMFLOAT2(int(m_windowBounds.Width / 60), int(m_windowBounds.Height / 45.7));
+	XMFLOAT2 boardSize = XMFLOAT2(int(m_windowBounds.Width / 60), int(m_windowBounds.Height / 60));
 	vectorBoard = new VectorBoard(arrowTexture, boardSize, &m_windowBounds);
 }
 
