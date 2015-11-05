@@ -26,5 +26,5 @@ class VectorBoard {
 		Windows::Foundation::Rect* movementBounds;
 		vector<vector<VectorCell*>> board; 
 		
-		XMFLOAT2 VectorBoard::calculateSum(int i, int j, vector<ElectricObject> electricObjects);
+		void VectorBoard::calculateSum(vector<ElectricObject> electricObjects);
 };

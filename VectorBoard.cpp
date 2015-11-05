@@ -24,13 +24,13 @@ VectorBoard::VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardS
 }
 	
 void VectorBoard::Update(float timeTotal, float timeDelta, vector<ElectricObject> electricObjects) {
-	for(int i=0; i<board.size(); i++) {
-		for(int j =0; j<board[i].size();j++) {
-			//board[i][j]->setFieldLine(calculateSum(i, j, electricObjects));
-			board[i][j]->Update(timeTotal, timeDelta);
-		}
-	}
-		
+	//for(int i=0; i<board.size(); i++) {
+	//	for(int j =0; j<board[i].size();j++) {
+	//		//board[i][j]->setFieldLine(calculateSum(i, j, electricObjects));
+	//		board[i][j]->Update(timeTotal, timeDelta);
+	//	}
+	//}
+	calculateSum(electricObjects);
 }
 	
 void VectorBoard::Draw(SpriteBatch* spriteBatch) {
@@ -41,24 +41,18 @@ void VectorBoard::Draw(SpriteBatch* spriteBatch) {
 	}
 }
 	
-// TODO: Impelement and add to Update function
-XMFLOAT2 VectorBoard::calculateSum(int i, int j, vector<ElectricObject> electricObjects){
-	XMFLOAT2 sum = XMFLOAT2(0, 0);
-	for (ElectricObject thing : electricObjects) {
-		//sum.x += thing.getGrid()[i][j].getVector().x;
-		//sum.y += thing.getGrid()[i][j].getVector().y;
-
-		for (int i = 0; i < board.size(); i++) {
-			for (int j = 0; j < board[i].size(); j++) {
-				XMFLOAT2 field = thing.calculateField(board[i][j]->getPosition());
-				board[i][j]->setFieldLine(field);
+void VectorBoard::calculateSum(vector<ElectricObject> electricObjects){
+	XMFLOAT2 field = XMFLOAT2(0, 0);
+	for (int i = 0; i < board.size(); i++) {
+		for (int j = 0; j < board[i].size(); j++) {
+			for (ElectricObject thing : electricObjects) {
+				XMFLOAT2 singleField = thing.calculateField(board[i][j]->getPosition());
+				field.x += singleField.x;
+				field.y += singleField.y;
 			}
+			board[i][j]->setFieldLine(field);
 		}
-
-	}	
-
-
-	return sum;
+	}
 }
 
 
