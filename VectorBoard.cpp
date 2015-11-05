@@ -11,7 +11,7 @@ VectorBoard::VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardS
 
 	XMFLOAT2 unitLength = XMFLOAT2(movementBounds->Width / boardSize.x, movementBounds->Height / boardSize.y);
 	//XMFLOAT2 unitLength = XMFLOAT2(60, 60);
-	XMFLOAT2 origin = XMFLOAT2(0, 457 * .1 / 2);
+	XMFLOAT2 origin = XMFLOAT2(0, 457 / 2);
 	for (int i = 0; i < boardSize.x - 1; i++) {	// -1 because it needs extra space
 		vector<VectorCell*> row;
 		for (int j = 0; j < boardSize.y - 1; j++ ) {
