@@ -143,7 +143,7 @@ void Sprite::Draw(SpriteBatch* spriteBatch)
 	sourceRectangle->right = spritesheet.currentPosition.x + spritesheet.currentSize.x;
 	sourceRectangle->bottom = spritesheet.currentPosition.y + spritesheet.currentSize.y;
 
-	spriteBatch->Draw(m_Texture, XMFLOAT2(position.x, position.y),
+	spriteBatch->Draw(m_Texture, position,
 		sourceRectangle, color, rotation, origin,
 		XMFLOAT2(getWidth() / imageWidth, getHeight() / imageHeight),
 		spriteEffects, 0.0f);
@@ -252,7 +252,7 @@ bool Sprite::Blocked(XMFLOAT2 newPosition)
 Windows::Foundation::Rect* Sprite::CreateBoundingBoxFromPosition(XMFLOAT2 position)
 {
 	// Need to account for origin
-	return new Windows::Foundation::Rect(position.x - origin.x, position.y - origin.y, getWidth(), getHeight());
+	return new Windows::Foundation::Rect(position.x - (origin.x*scale), position.y - (origin.y*scale), getWidth(), getHeight());
 }
 
 bool Sprite::CollidesWith(Sprite* that)
@@ -304,7 +304,10 @@ void Sprite::setVelocity(XMFLOAT2 newVelocity)
 	NormalizeVelocity();
 }
 Windows::Foundation::Rect* Sprite::getBoundingBox() { return BoundingBox; }
-void Sprite::setPosition(XMFLOAT2 newPosition) { position = newPosition; }
+void Sprite::setPosition(XMFLOAT2 newPosition) { 
+	position = newPosition;
+	BoundingBox = CreateBoundingBoxFromPosition(position);
+}
 void Sprite::setRotation(float newRotation) { rotation = newRotation; }
 void Sprite::setOpacity(float newOpacity) {
 	if (newOpacity >= 0 && newOpacity <= 1) {

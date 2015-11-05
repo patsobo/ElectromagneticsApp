@@ -16,7 +16,7 @@ class VectorBoard {
 	public:
 		VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardSize, Windows::Foundation::Rect* movementBounds);
 		
-		void Update(float timeTotal, float timeDelta, vector<ElectricObject> electricObjects);
+		void Update(float timeTotal, float timeDelta, vector<ElectricObject*> electricObjects);
 		void Draw(SpriteBatch* spriteBatch);
 
 		// Test method
@@ -26,5 +26,5 @@ class VectorBoard {
 		Windows::Foundation::Rect* movementBounds;
 		vector<vector<VectorCell*>> board; 
 		
-		void VectorBoard::calculateSum(vector<ElectricObject> electricObjects);
+		void VectorBoard::calculateSum(vector<ElectricObject*> electricObjects);
 };

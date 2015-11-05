@@ -3,13 +3,12 @@
 
 static float charge = 1;
 
-class ElectricObject : Sprite {
+class ElectricObject : public Sprite {
 
 public:
 	ElectricObject(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMFLOAT2 boardSize);
 
 	void isTouched(XMFLOAT2 point);
-	vector<vector<XMFLOAT2>> getGrid();
 	XMFLOAT2 calculateField(XMFLOAT2 position);
 
 private:

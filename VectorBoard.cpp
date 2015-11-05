@@ -23,7 +23,7 @@ VectorBoard::VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardS
 	}		
 }
 	
-void VectorBoard::Update(float timeTotal, float timeDelta, vector<ElectricObject> electricObjects) {
+void VectorBoard::Update(float timeTotal, float timeDelta, vector<ElectricObject*> electricObjects) {
 	//for(int i=0; i<board.size(); i++) {
 	//	for(int j =0; j<board[i].size();j++) {
 	//		//board[i][j]->setFieldLine(calculateSum(i, j, electricObjects));
@@ -41,12 +41,12 @@ void VectorBoard::Draw(SpriteBatch* spriteBatch) {
 	}
 }
 	
-void VectorBoard::calculateSum(vector<ElectricObject> electricObjects){
+void VectorBoard::calculateSum(vector<ElectricObject*> electricObjects){
 	XMFLOAT2 field = XMFLOAT2(0, 0);
 	for (int i = 0; i < board.size(); i++) {
 		for (int j = 0; j < board[i].size(); j++) {
-			for (ElectricObject thing : electricObjects) {
-				XMFLOAT2 singleField = thing.calculateField(board[i][j]->getPosition());
+			for (ElectricObject* thing : electricObjects) {
+				XMFLOAT2 singleField = thing->calculateField(board[i][j]->getPosition());
 				field.x += singleField.x;
 				field.y += singleField.y;
 			}

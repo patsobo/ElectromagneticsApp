@@ -22,33 +22,36 @@ void Renderer::CreateWindowSizeDependentResources()
 {
 	Direct3DBase::CreateWindowSizeDependentResources();
 
-	float scale = DisplayProperties::LogicalDpi / 96.0f;
+	scale = DisplayProperties::LogicalDpi / 96.0f;
 	m_windowBounds.Height *= scale;
 	m_windowBounds.Width *= scale;
+
+	float localScale;
 
 	m_spriteBatch = unique_ptr<SpriteBatch>(new DirectX::SpriteBatch(m_d3dContext.Get()));
 
 	// Create the arrow
 	arrowTexture = nullptr;
-	scale = .1;
+	localScale = .1;
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/arrow.dds", nullptr, &arrowTexture, MAXSIZE_T);
-	arrow = new Sprite(arrowTexture, XMFLOAT2(600, 457), XMFLOAT2(0, 0), &m_windowBounds, scale);
+	arrow = new Sprite(arrowTexture, XMFLOAT2(600, 457), XMFLOAT2(0, 0), &m_windowBounds, localScale);
 
+	// Create the vector board
 	XMFLOAT2 boardSize = XMFLOAT2(int(m_windowBounds.Width / 60), int(m_windowBounds.Height / 60));
 	vectorBoard = new VectorBoard(arrowTexture, boardSize, &m_windowBounds);
+
+	// Create the charge
+	chargeTexture = nullptr;
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &chargeTexture, MAXSIZE_T);
+	charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize);
+	electricObjects.push_back(charge);
 }
 
 void Renderer::Update(float timeTotal, float timeDelta)
 {
-	vector<ElectricObject> electricObjects;
-
 	vectorBoard->Update(timeTotal, timeDelta, electricObjects);
-}
-
-void Renderer::calculateFields() {
-	for (ElectricObject thing: electricObjects) {
-		for (int i = 0)
-	}
+	for (ElectricObject* thing : electricObjects)
+		thing->Update(timeTotal, timeDelta);
 }
 
 void Renderer::Render()
@@ -77,17 +80,24 @@ void Renderer::Render()
 	// Where my sprites will be drawn
 	m_spriteBatch->Begin();
 	vectorBoard->Draw(m_spriteBatch.get());
+	for (ElectricObject* thing : electricObjects)
+		thing->Draw(m_spriteBatch.get());
 	m_spriteBatch->End();
 }
 
 void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
-	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X, currentPoint->RawPosition.Y);
+	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
+	for (ElectricObject* thing : electricObjects) {
+		//if (onSprite(thing, vectorPoint)) {
+			thing->isTouched(vectorPoint);
+		//}
+	}
 }
 
 void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
-	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X, currentPoint->RawPosition.Y);
+	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
 	xSwipeCounter = 0;
 	ySwipeCounter = 0;
 	previousPoint = XMFLOAT2(0, 0);
@@ -95,7 +105,13 @@ void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint
 
 void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
-	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X, currentPoint->RawPosition.Y);
+	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
+	for (ElectricObject* thing : electricObjects) {
+		if (onSprite(thing, vectorPoint)) {
+			thing->isTouched(vectorPoint);
+		}
+	}
+
 	if (abs(xSwipeCounter) > SWIPE) {
 		vectorBoard->addField(XMFLOAT2(xSwipeCounter / abs(xSwipeCounter), 0));	// magnitude
 		xSwipeCounter = 0;
@@ -121,4 +137,13 @@ void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 
 	previousPoint = vectorPoint;
 
+}
+
+bool Renderer::onSprite(Sprite* thing, XMFLOAT2 pointer)
+{
+	Point point = Point(pointer.x, pointer.y);
+	Rect box = *thing->getBoundingBox();
+	if (thing->getBoundingBox()->Contains(point))
+		return true;
+	return false;
 }

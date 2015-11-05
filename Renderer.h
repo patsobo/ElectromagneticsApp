@@ -24,13 +24,16 @@ public:
 	void HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint);	// called when pointer is released, alters state
 	void HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint);
 private:
+	float scale;	// Scale for the screen (VERY IMPORTANT)
 	unique_ptr<SpriteBatch> m_spriteBatch;
 	ID3D11ShaderResourceView* arrowTexture;
 	Sprite* arrow;
 	VectorBoard* vectorBoard;
-	vector<ElectricObject> electricObjects;
+	ID3D11ShaderResourceView* chargeTexture;
+	ElectricObject* charge;
+	vector<ElectricObject*> electricObjects;
 
-	void calculateFields();
+	bool onSprite(Sprite* thing, XMFLOAT2 point);
 
 	// Test variables
 	int xSwipeCounter;
