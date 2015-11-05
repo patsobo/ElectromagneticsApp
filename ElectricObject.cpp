@@ -16,15 +16,16 @@ void ElectricObject::createBoard(XMFLOAT2 boardSize) {
 
 void ElectricObject::isTouched(XMFLOAT2 point) {
 	Windows::Foundation::Point specPoint = Windows::Foundation::Point(point.x, point.y);
-	//if (getBoundingBox()->Contains(specPoint))
+	if (getBoundingBox()->Contains(specPoint))
 		setPosition(point);
 }
 
 XMFLOAT2 ElectricObject::calculateField(XMFLOAT2 point) {
 	float x = point.x - position.x;
 	float y = point.y - position.y;
-	float distance = sqrt(pow(y, 2) + pow(x, 2));
-	float magnitude = charge / pow(distance, 2);	// approximate electric field equation
-	float angle = atan(y / x);	// in radians
-	return XMFLOAT2(magnitude*cos(angle), magnitude*sin(angle));
+	float distance = sqrt(pow(abs(y), 2) + pow(abs(x), 2));
+	float magnitude = K * CHARGE / pow(distance, 2);	// approximate electric field equation
+
+	return XMFLOAT2(x, -1 * y);
+	return XMFLOAT2(magnitude * x / distance, -1 * magnitude* y / distance);
 }

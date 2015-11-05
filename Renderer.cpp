@@ -89,9 +89,9 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
 	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
 	for (ElectricObject* thing : electricObjects) {
-		//if (onSprite(thing, vectorPoint)) {
+		if (onSprite(thing, vectorPoint)) {
 			thing->isTouched(vectorPoint);
-		//}
+		}
 	}
 }
 
@@ -112,30 +112,30 @@ void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 		}
 	}
 
-	if (abs(xSwipeCounter) > SWIPE) {
-		vectorBoard->addField(XMFLOAT2(xSwipeCounter / abs(xSwipeCounter), 0));	// magnitude
-		xSwipeCounter = 0;
-	}
-	if (abs(ySwipeCounter) > SWIPE) {
-		vectorBoard->addField(XMFLOAT2(0, ySwipeCounter / abs(ySwipeCounter)));	// magnitude
-		ySwipeCounter = 0;
-	}
+	//if (abs(xSwipeCounter) > SWIPE) {
+	//	vectorBoard->addField(XMFLOAT2(xSwipeCounter / abs(xSwipeCounter), 0));	// magnitude
+	//	xSwipeCounter = 0;
+	//}
+	//if (abs(ySwipeCounter) > SWIPE) {
+	//	vectorBoard->addField(XMFLOAT2(0, ySwipeCounter / abs(ySwipeCounter)));	// magnitude
+	//	ySwipeCounter = 0;
+	//}
 
-	if (vectorPoint.y < previousPoint.y) {	// You're moving up
-		ySwipeCounter++;
-	}
-	else if (vectorPoint.y > previousPoint.y) {
-		ySwipeCounter--;
-	}
+	//if (vectorPoint.y < previousPoint.y) {	// You're moving up
+	//	ySwipeCounter++;
+	//}
+	//else if (vectorPoint.y > previousPoint.y) {
+	//	ySwipeCounter--;
+	//}
 
-	if (vectorPoint.x < previousPoint.x) {	// You're moving left
-		xSwipeCounter--;
-	}
-	else if (vectorPoint.x > previousPoint.x) {
-		xSwipeCounter++;
-	}
+	//if (vectorPoint.x < previousPoint.x) {	// You're moving left
+	//	xSwipeCounter--;
+	//}
+	//else if (vectorPoint.x > previousPoint.x) {
+	//	xSwipeCounter++;
+	//}
 
-	previousPoint = vectorPoint;
+	//previousPoint = vectorPoint;
 
 }
 

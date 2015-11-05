@@ -24,12 +24,13 @@ VectorBoard::VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardS
 }
 	
 void VectorBoard::Update(float timeTotal, float timeDelta, vector<ElectricObject*> electricObjects) {
-	//for(int i=0; i<board.size(); i++) {
-	//	for(int j =0; j<board[i].size();j++) {
-	//		//board[i][j]->setFieldLine(calculateSum(i, j, electricObjects));
-	//		board[i][j]->Update(timeTotal, timeDelta);
-	//	}
-	//}
+	// Either have to run this double for loop twice for include the update call in the calculateSum method.  Hmm....
+	for(int i=0; i<board.size(); i++) {
+		for(int j =0; j<board[i].size();j++) {
+			//board[i][j]->setFieldLine(calculateSum(i, j, electricObjects));
+			board[i][j]->Update(timeTotal, timeDelta);
+		}
+	}
 	calculateSum(electricObjects);
 }
 	
@@ -51,6 +52,7 @@ void VectorBoard::calculateSum(vector<ElectricObject*> electricObjects){
 				field.y += singleField.y;
 			}
 			board[i][j]->setFieldLine(field);
+			field = XMFLOAT2(0, 0);
 		}
 	}
 }

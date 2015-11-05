@@ -1,7 +1,8 @@
 #pragma once
 #include "Sprite.h"
 
-static float charge = 1;
+static float CHARGE = 1;
+static float K = 100000;
 
 class ElectricObject : public Sprite {
 
