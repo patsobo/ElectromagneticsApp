@@ -45,6 +45,7 @@ void VectorCell::updateOpacityRotation() {
 }
 	
 void VectorCell::setFieldLine(XMFLOAT2 newFieldLine) { fieldLine = newFieldLine; }
+XMFLOAT2 VectorCell::getPosition() { return position; }
 
 // TODO: TEST
 XMFLOAT2 VectorCell::getFieldLine() { return fieldLine; }

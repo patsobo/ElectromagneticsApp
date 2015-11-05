@@ -25,10 +25,12 @@ public:
 	void HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint);
 private:
 	unique_ptr<SpriteBatch> m_spriteBatch;
-
 	ID3D11ShaderResourceView* arrowTexture;
 	Sprite* arrow;
 	VectorBoard* vectorBoard;
+	vector<ElectricObject> electricObjects;
+
+	void calculateFields();
 
 	// Test variables
 	int xSwipeCounter;

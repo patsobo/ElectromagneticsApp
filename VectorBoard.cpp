@@ -11,7 +11,7 @@ VectorBoard::VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardS
 
 	XMFLOAT2 unitLength = XMFLOAT2(movementBounds->Width / boardSize.x, movementBounds->Height / boardSize.y);
 	//XMFLOAT2 unitLength = XMFLOAT2(60, 60);
-	XMFLOAT2 origin = XMFLOAT2(0, 457 / 2);
+	XMFLOAT2 origin = XMFLOAT2(0, 457 / 2);	// Origin is point is found before scaling of image.
 	for (int i = 0; i < boardSize.x - 1; i++) {	// -1 because it needs extra space
 		vector<VectorCell*> row;
 		for (int j = 0; j < boardSize.y - 1; j++ ) {
@@ -34,8 +34,8 @@ void VectorBoard::Update(float timeTotal, float timeDelta, vector<ElectricObject
 }
 	
 void VectorBoard::Draw(SpriteBatch* spriteBatch) {
-	for(int i=0; i<board.size(); i++) {
-		for(int j =0; j<board[i].size();j++) {
+	for(int i=0; i < board.size(); i++) {
+		for(int j =0; j < board[i].size();j++) {
 			board[i][j]->Draw(spriteBatch); 
 		}
 	}
@@ -47,9 +47,17 @@ XMFLOAT2 VectorBoard::calculateSum(int i, int j, vector<ElectricObject> electric
 	for (ElectricObject thing : electricObjects) {
 		//sum.x += thing.getGrid()[i][j].getVector().x;
 		//sum.y += thing.getGrid()[i][j].getVector().y;
-		continue;
+
+		for (int i = 0; i < board.size(); i++) {
+			for (int j = 0; j < board[i].size(); j++) {
+				XMFLOAT2 field = thing.calculateField(board[i][j]->getPosition());
+				board[i][j]->setFieldLine(field);
+			}
+		}
+
 	}	
-		
+
+
 	return sum;
 }
 

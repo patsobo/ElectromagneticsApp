@@ -251,7 +251,8 @@ bool Sprite::Blocked(XMFLOAT2 newPosition)
 
 Windows::Foundation::Rect* Sprite::CreateBoundingBoxFromPosition(XMFLOAT2 position)
 {
-	return new Windows::Foundation::Rect(position.x, position.y, getWidth(), getHeight());
+	// Need to account for origin
+	return new Windows::Foundation::Rect(position.x - origin.x, position.y - origin.y, getWidth(), getHeight());
 }
 
 bool Sprite::CollidesWith(Sprite* that)

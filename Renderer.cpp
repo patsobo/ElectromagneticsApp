@@ -41,7 +41,14 @@ void Renderer::CreateWindowSizeDependentResources()
 void Renderer::Update(float timeTotal, float timeDelta)
 {
 	vector<ElectricObject> electricObjects;
+
 	vectorBoard->Update(timeTotal, timeDelta, electricObjects);
+}
+
+void Renderer::calculateFields() {
+	for (ElectricObject thing: electricObjects) {
+		for (int i = 0)
+	}
 }
 
 void Renderer::Render()

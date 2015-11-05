@@ -19,6 +19,7 @@ class VectorCell {
 		void Draw(SpriteBatch* spriteBatch);
 		
 		void setFieldLine(XMFLOAT2 newFieldLine);
+		XMFLOAT2 getPosition();
 
 		// TODO: TEST METHOD ONLY
 		XMFLOAT2 getFieldLine();
