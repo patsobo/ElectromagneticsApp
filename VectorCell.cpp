@@ -40,7 +40,6 @@ void VectorCell::updateOpacityRotation() {
 	opacity = sqrt(pow(fieldLine.x, 2) + pow(fieldLine.y, 2)) / MAX_STRENGTH;
 	if (opacity > 1)
 		opacity = 1;
-	opacity = 1;
 	arrow->setRotation(rotation);
 	arrow->setOpacity(opacity);
 }

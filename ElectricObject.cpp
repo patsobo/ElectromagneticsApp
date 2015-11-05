@@ -26,6 +26,5 @@ XMFLOAT2 ElectricObject::calculateField(XMFLOAT2 point) {
 	float distance = sqrt(pow(abs(y), 2) + pow(abs(x), 2));
 	float magnitude = K * CHARGE / pow(distance, 2);	// approximate electric field equation
 
-	return XMFLOAT2(x, -1 * y);
 	return XMFLOAT2(magnitude * x / distance, -1 * magnitude* y / distance);
 }

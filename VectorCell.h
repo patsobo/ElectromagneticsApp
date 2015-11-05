@@ -9,7 +9,7 @@
 
 using namespace DirectX;
 
-static int MAX_STRENGTH = 10;
+static int MAX_STRENGTH = 15;
 
 class VectorCell {
 	public:
