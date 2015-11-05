@@ -12,6 +12,9 @@ public:
 	void isTouched(XMFLOAT2 point);
 	XMFLOAT2 calculateField(XMFLOAT2 position);
 
+	// Ehh....
+	bool isMoving;
+
 private:
 	vector<vector<XMFLOAT2>> board;
 

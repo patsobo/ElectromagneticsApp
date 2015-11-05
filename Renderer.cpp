@@ -45,6 +45,8 @@ void Renderer::CreateWindowSizeDependentResources()
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &chargeTexture, MAXSIZE_T);
 	charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize);
 	electricObjects.push_back(charge);
+	charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(400, 400), &m_windowBounds, boardSize);
+	electricObjects.push_back(charge);
 }
 
 void Renderer::Update(float timeTotal, float timeDelta)
@@ -91,6 +93,8 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 	for (ElectricObject* thing : electricObjects) {
 		if (onSprite(thing, vectorPoint)) {
 			thing->isTouched(vectorPoint);
+			thing->isMoving = true;
+			break;	// break because we only want one charge to be moving
 		}
 	}
 }
@@ -101,14 +105,31 @@ void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint
 	xSwipeCounter = 0;
 	ySwipeCounter = 0;
 	previousPoint = XMFLOAT2(0, 0);
+
+	for (ElectricObject* thing : electricObjects) {
+		if (thing->isMoving) {
+			thing->isMoving = false;
+		}
+	}
 }
 
 void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
+	bool noneIsMoving = true;
 	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
 	for (ElectricObject* thing : electricObjects) {
-		if (onSprite(thing, vectorPoint)) {
+		if (onSprite(thing, vectorPoint) && thing->isMoving) {
 			thing->isTouched(vectorPoint);
+			noneIsMoving = false;
+		}
+	}
+	if (noneIsMoving) {	// Made for specific case where, if you haven't selected any charge when you were moving, the first you move over becomes the charge that moves.
+		for (ElectricObject* thing : electricObjects) {
+			if (onSprite(thing, vectorPoint)) {
+				thing->isTouched(vectorPoint);
+				thing->isMoving = true;
+				break;
+		}
 		}
 	}
 
