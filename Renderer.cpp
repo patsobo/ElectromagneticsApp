@@ -44,16 +44,22 @@ void Renderer::CreateWindowSizeDependentResources()
 	chargeTexture = nullptr;
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &chargeTexture, MAXSIZE_T);
 	charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize);
-	electricObjects.push_back(charge);
-	charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(400, 400), &m_windowBounds, boardSize);
-	electricObjects.push_back(charge);
+
+	// Create the charge box and the electric object manager
+	chargeBoxTexture = nullptr;
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge_box.dds", nullptr, &chargeBoxTexture, MAXSIZE_T);
+	chargeBox = new Sprite(chargeBoxTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width - 100, m_windowBounds.Height - 100), &m_windowBounds, .2);
+	objectManager = new ElectricObjectManager(chargeBox, chargeTexture, XMFLOAT2(500, 500), &m_windowBounds, boardSize);
+
+	//electricObjects.push_back(charge);
+	//charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(400, 400), &m_windowBounds, boardSize);
+	//electricObjects.push_back(charge);
 }
 
 void Renderer::Update(float timeTotal, float timeDelta)
 {
-	vectorBoard->Update(timeTotal, timeDelta, electricObjects);
-	for (ElectricObject* thing : electricObjects)
-		thing->Update(timeTotal, timeDelta);
+	vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
+	objectManager->Update(timeTotal, timeDelta);
 }
 
 void Renderer::Render()
@@ -82,20 +88,24 @@ void Renderer::Render()
 	// Where my sprites will be drawn
 	m_spriteBatch->Begin();
 	vectorBoard->Draw(m_spriteBatch.get());
-	for (ElectricObject* thing : electricObjects)
-		thing->Draw(m_spriteBatch.get());
+	objectManager->Draw(m_spriteBatch.get());
 	m_spriteBatch->End();
 }
 
 void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
 	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
-	for (ElectricObject* thing : electricObjects) {
+	for (ElectricObject* thing : objectManager->getElectricObjects()) {
 		if (onSprite(thing, vectorPoint)) {
 			thing->isTouched(vectorPoint);
 			thing->isMoving = true;
 			break;	// break because we only want one charge to be moving
 		}
+	}
+
+	// If you've touched the creation box, create a new object
+	if (onSprite(objectManager->getCreationBox(), vectorPoint)) {
+		objectManager->createObject();
 	}
 }
 
@@ -106,25 +116,28 @@ void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint
 	ySwipeCounter = 0;
 	previousPoint = XMFLOAT2(0, 0);
 
-	for (ElectricObject* thing : electricObjects) {
+	for (ElectricObject* thing : objectManager->getElectricObjects()) {
 		if (thing->isMoving) {
 			thing->isMoving = false;
 		}
 	}
+
+	// If you've dragged an object into the box
+	objectManager->checkForDeleteObject();
 }
 
 void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
 	bool noneIsMoving = true;
 	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
-	for (ElectricObject* thing : electricObjects) {
+	for (ElectricObject* thing : objectManager->getElectricObjects()) {
 		if (onSprite(thing, vectorPoint) && thing->isMoving) {
 			thing->isTouched(vectorPoint);
 			noneIsMoving = false;
 		}
 	}
 	if (noneIsMoving) {	// Made for specific case where, if you haven't selected any charge when you were moving, the first you move over becomes the charge that moves.
-		for (ElectricObject* thing : electricObjects) {
+		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (onSprite(thing, vectorPoint)) {
 				thing->isTouched(vectorPoint);
 				thing->isMoving = true;
@@ -132,32 +145,6 @@ void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 		}
 		}
 	}
-
-	//if (abs(xSwipeCounter) > SWIPE) {
-	//	vectorBoard->addField(XMFLOAT2(xSwipeCounter / abs(xSwipeCounter), 0));	// magnitude
-	//	xSwipeCounter = 0;
-	//}
-	//if (abs(ySwipeCounter) > SWIPE) {
-	//	vectorBoard->addField(XMFLOAT2(0, ySwipeCounter / abs(ySwipeCounter)));	// magnitude
-	//	ySwipeCounter = 0;
-	//}
-
-	//if (vectorPoint.y < previousPoint.y) {	// You're moving up
-	//	ySwipeCounter++;
-	//}
-	//else if (vectorPoint.y > previousPoint.y) {
-	//	ySwipeCounter--;
-	//}
-
-	//if (vectorPoint.x < previousPoint.x) {	// You're moving left
-	//	xSwipeCounter--;
-	//}
-	//else if (vectorPoint.x > previousPoint.x) {
-	//	xSwipeCounter++;
-	//}
-
-	//previousPoint = vectorPoint;
-
 }
 
 bool Renderer::onSprite(Sprite* thing, XMFLOAT2 pointer)

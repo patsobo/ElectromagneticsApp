@@ -4,6 +4,8 @@
 #include "VectorBoard.h"	// Includes VectorCell.h
 #include "Slider.h"
 #include "AppState.h"
+#include "ElectricObjectManager.h"
+#include "Puck.h"
 
 static int SWIPE = 5;
 
@@ -32,7 +34,10 @@ private:
 	VectorBoard* vectorBoard;
 	ID3D11ShaderResourceView* chargeTexture;
 	ElectricObject* charge;
-	vector<ElectricObject*> electricObjects;
+	ID3D11ShaderResourceView* chargeBoxTexture;
+	Sprite* chargeBox;
+	ElectricObjectManager* objectManager;
+	//vector<ElectricObject*> electricObjects;
 
 	bool onSprite(Sprite* thing, XMFLOAT2 point);
 

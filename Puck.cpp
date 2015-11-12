@@ -11,7 +11,7 @@ void Puck::Update(float timeTotal, float timeDelta, XMFLOAT2 currentField) {
 	Sprite::Update(timeTotal, timeDelta);	
 }
 
-XMFLOAT2 Puck::calculateVelocity(XMFLOAT2 currentField) {
+void Puck::calculateVelocity(XMFLOAT2 currentField) {
 	Velocity.x += currentField.x;
 	Velocity.y += currentField.y;
 }
