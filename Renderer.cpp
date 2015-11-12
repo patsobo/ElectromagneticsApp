@@ -40,16 +40,21 @@ void Renderer::CreateWindowSizeDependentResources()
 	XMFLOAT2 boardSize = XMFLOAT2(int(m_windowBounds.Width / 60), int(m_windowBounds.Height / 60));
 	vectorBoard = new VectorBoard(arrowTexture, boardSize, &m_windowBounds);
 
-	// Create the charge
-	chargeTexture = nullptr;
-	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &chargeTexture, MAXSIZE_T);
-	charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize);
+	// Create the positive charge
+	posChargeTexture = nullptr;
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &posChargeTexture, MAXSIZE_T);
+	posCharge = new ElectricObject(posChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, 1);
+
+	// Create the negative charge
+	posChargeTexture = nullptr;
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &negChargeTexture, MAXSIZE_T);
+	negCharge = new ElectricObject(negChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, -1);
 
 	// Create the charge box and the electric object manager
 	chargeBoxTexture = nullptr;
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge_box.dds", nullptr, &chargeBoxTexture, MAXSIZE_T);
 	chargeBox = new Sprite(chargeBoxTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width - 100, m_windowBounds.Height - 100), &m_windowBounds, .2);
-	objectManager = new ElectricObjectManager(chargeBox, chargeTexture, XMFLOAT2(500, 500), &m_windowBounds, boardSize);
+	objectManager = new ElectricObjectManager(chargeBox, posChargeTexture, XMFLOAT2(500, 500), &m_windowBounds, boardSize);
 
 	//electricObjects.push_back(charge);
 	//charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(400, 400), &m_windowBounds, boardSize);

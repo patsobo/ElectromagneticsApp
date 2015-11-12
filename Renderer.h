@@ -32,8 +32,10 @@ private:
 	ID3D11ShaderResourceView* arrowTexture;
 	Sprite* arrow;
 	VectorBoard* vectorBoard;
-	ID3D11ShaderResourceView* chargeTexture;
-	ElectricObject* charge;
+	ID3D11ShaderResourceView* posChargeTexture;
+	ElectricObject* posCharge;
+	ID3D11ShaderResourceView* negChargeTexture;
+	ElectricObject* negCharge;
 	ID3D11ShaderResourceView* chargeBoxTexture;
 	Sprite* chargeBox;
 	ElectricObjectManager* objectManager;
