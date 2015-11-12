@@ -9,7 +9,7 @@ using namespace std;
 VectorBoard::VectorBoard(ID3D11ShaderResourceView* arrowTexture, XMFLOAT2 boardSize, Windows::Foundation::Rect* movementBounds) {
 	this->movementBounds = movementBounds;
 
-	XMFLOAT2 unitLength = XMFLOAT2(movementBounds->Width / boardSize.x, movementBounds->Height / boardSize.y);
+	unitLength = XMFLOAT2(movementBounds->Width / boardSize.x, movementBounds->Height / boardSize.y);
 	//XMFLOAT2 unitLength = XMFLOAT2(60, 60);
 	XMFLOAT2 origin = XMFLOAT2(0, 457 / 2);	// Origin is point is found before scaling of image.
 	for (int i = 0; i < boardSize.x - 1; i++) {	// -1 because it needs extra space
@@ -55,6 +55,16 @@ void VectorBoard::calculateSum(vector<ElectricObject*> electricObjects){
 			field = XMFLOAT2(0, 0);
 		}
 	}
+}
+
+XMFLOAT2 VectorBoard::getClosestField(XMFLOAT2 position) {
+	int x = position.x / unitLength.x - 1;
+	if (position.x - x*unitLength.x > unitLength.x / 2 && x < board.size() - 1)
+		x++;
+	int y = position.y / unitLength.y - 1;
+	if (position.y - y*unitLength.y > unitLength.y / 2 && y < board[0].size() - 1)
+		y++;
+	return board[x][y]->getFieldLine();
 }
 
 

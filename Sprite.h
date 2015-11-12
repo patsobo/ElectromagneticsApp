@@ -55,6 +55,7 @@ public:
 	void setOpacity(float newOpacity);
 	void setRotation(float newRotation);
 	bool onSprite(Sprite* that, XMFLOAT2 point);
+	XMFLOAT2 getPosition();
 
 private:
 	Spritesheet spritesheet;

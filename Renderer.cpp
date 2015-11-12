@@ -59,6 +59,10 @@ void Renderer::CreateWindowSizeDependentResources()
 	// Create the charge box and the electric object manager
 	objectManager = new ElectricObjectManager(textures, XMFLOAT2(500, 500), &m_windowBounds, boardSize);
 
+	// Create the puck
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/puck.dds", nullptr, &puckTexture, MAXSIZE_T);
+	puck = new Puck(puckTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width / 2, m_windowBounds.Height / 2), &m_windowBounds);
+
 	//electricObjects.push_back(charge);
 	//charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(400, 400), &m_windowBounds, boardSize);
 	//electricObjects.push_back(charge);
@@ -67,6 +71,7 @@ void Renderer::CreateWindowSizeDependentResources()
 void Renderer::Update(float timeTotal, float timeDelta)
 {
 	vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
+	puck->Update(timeTotal, timeDelta, vectorBoard->getClosestField(puck->getPosition()));
 	objectManager->Update(timeTotal, timeDelta);
 }
 
@@ -96,6 +101,7 @@ void Renderer::Render()
 	// Where my sprites will be drawn
 	m_spriteBatch->Begin();
 	vectorBoard->Draw(m_spriteBatch.get());
+	puck->Draw(m_spriteBatch.get());
 	objectManager->Draw(m_spriteBatch.get());
 	m_spriteBatch->End();
 }

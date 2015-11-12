@@ -68,5 +68,4 @@ void ElectricObjectManager::checkForCreateObject(XMFLOAT2 point) {
 	}
 }
 
-
 vector<ElectricObject*> ElectricObjectManager::getElectricObjects() { return electricObjects; }

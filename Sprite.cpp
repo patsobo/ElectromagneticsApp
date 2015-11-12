@@ -316,3 +316,4 @@ void Sprite::setOpacity(float newOpacity) {
 		return;
 	}
 }
+XMFLOAT2 Sprite::getPosition() { return position; }

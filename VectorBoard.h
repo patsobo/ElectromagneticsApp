@@ -18,6 +18,7 @@ class VectorBoard {
 		
 		void Update(float timeTotal, float timeDelta, vector<ElectricObject*> electricObjects);
 		void Draw(SpriteBatch* spriteBatch);
+		XMFLOAT2 getClosestField(XMFLOAT2 position);
 
 		// Test method
 		void addField(XMFLOAT2 field);
@@ -25,6 +26,7 @@ class VectorBoard {
 	private:
 		Windows::Foundation::Rect* movementBounds;
 		vector<vector<VectorCell*>> board; 
-		
+		XMFLOAT2 unitLength;
+
 		void VectorBoard::calculateSum(vector<ElectricObject*> electricObjects);
 };

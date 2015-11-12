@@ -43,6 +43,8 @@ private:
 	Sprite* negChargeBox;
 	ElectricObjectManager* objectManager;
 	map<Sprite*, ID3D11ShaderResourceView*> textures;
+	Puck* puck;
+	ID3D11ShaderResourceView* puckTexture;
 	//vector<ElectricObject*> electricObjects;
 
 	bool onSprite(Sprite* thing, XMFLOAT2 point);
