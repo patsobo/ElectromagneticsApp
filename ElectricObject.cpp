@@ -17,8 +17,8 @@ void ElectricObject::createBoard(XMFLOAT2 boardSize) {
 
 void ElectricObject::isTouched(XMFLOAT2 point) {
 	Windows::Foundation::Point specPoint = Windows::Foundation::Point(point.x, point.y);
-	if (getBoundingBox()->Contains(specPoint))
-		setPosition(point);
+	//if (getBoundingBox()->Contains(specPoint))
+	setPosition(point);
 }
 
 XMFLOAT2 ElectricObject::calculateField(XMFLOAT2 point) {

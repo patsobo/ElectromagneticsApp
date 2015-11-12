@@ -57,7 +57,6 @@ public:
 
 private:
 	Spritesheet spritesheet;
-	XMFLOAT2 Velocity;
 	int currentFrame;
 	int animationState; //value that controls which part of the sprite sheet to animate (therefore, created sprites MUST modify this value)
 	bool shouldChangeAnimation; //this value works in tandem with animationState
@@ -80,6 +79,7 @@ private:
 	double SecondsBetweenFrames();
 
 protected:
+	XMFLOAT2 Velocity;
 	XMVECTORF32 color;
 	XMFLOAT2 initialPosition;	// For resetting
 	XMFLOAT2 position;

@@ -3,6 +3,7 @@
 #include "Direct3DBase.h"
 #include "VectorBoard.h"	// Includes VectorCell.h
 #include "Slider.h"
+#include "AppState.h"
 
 static int SWIPE = 5;
 
