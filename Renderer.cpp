@@ -44,17 +44,20 @@ void Renderer::CreateWindowSizeDependentResources()
 	posChargeTexture = nullptr;
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &posChargeTexture, MAXSIZE_T);
 	posCharge = new ElectricObject(posChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, 1);
-
-	// Create the negative charge
-	posChargeTexture = nullptr;
-	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &negChargeTexture, MAXSIZE_T);
-	negCharge = new ElectricObject(negChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, -1);
-
-	// Create the charge box and the electric object manager
 	chargeBoxTexture = nullptr;
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge_box.dds", nullptr, &chargeBoxTexture, MAXSIZE_T);
 	chargeBox = new Sprite(chargeBoxTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width - 100, m_windowBounds.Height - 100), &m_windowBounds, .2);
-	objectManager = new ElectricObjectManager(chargeBox, posChargeTexture, XMFLOAT2(500, 500), &m_windowBounds, boardSize);
+	textures[chargeBox] = posChargeTexture;
+
+	// Create the negative charge
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/neg_charge.dds", nullptr, &negChargeTexture, MAXSIZE_T);
+	negCharge = new ElectricObject(negChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, -1);
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/neg_charge_box.dds", nullptr, &negChargeBoxTexture, MAXSIZE_T);
+	negChargeBox = new Sprite(negChargeBoxTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width - 200, m_windowBounds.Height - 100), &m_windowBounds, .2);
+	textures[negChargeBox] = negChargeTexture;
+
+	// Create the charge box and the electric object manager
+	objectManager = new ElectricObjectManager(textures, XMFLOAT2(500, 500), &m_windowBounds, boardSize);
 
 	//electricObjects.push_back(charge);
 	//charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(400, 400), &m_windowBounds, boardSize);
@@ -108,10 +111,8 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 		}
 	}
 
-	// If you've touched the creation box, create a new object
-	if (onSprite(objectManager->getCreationBox(), vectorPoint)) {
-		objectManager->createObject();
-	}
+	// Check for if a object should be created.
+	objectManager->checkForCreateObject(vectorPoint);
 }
 
 void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint)

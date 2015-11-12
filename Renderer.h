@@ -6,6 +6,7 @@
 #include "AppState.h"
 #include "ElectricObjectManager.h"
 #include "Puck.h"
+#include <map>
 
 static int SWIPE = 5;
 
@@ -37,8 +38,11 @@ private:
 	ID3D11ShaderResourceView* negChargeTexture;
 	ElectricObject* negCharge;
 	ID3D11ShaderResourceView* chargeBoxTexture;
+	ID3D11ShaderResourceView* negChargeBoxTexture;
 	Sprite* chargeBox;
+	Sprite* negChargeBox;
 	ElectricObjectManager* objectManager;
+	map<Sprite*, ID3D11ShaderResourceView*> textures;
 	//vector<ElectricObject*> electricObjects;
 
 	bool onSprite(Sprite* thing, XMFLOAT2 point);
