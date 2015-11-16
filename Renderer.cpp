@@ -8,8 +8,6 @@ using namespace Windows::UI::Core;
 using namespace Windows::Graphics::Display;
 
 Renderer::Renderer() {
-	xSwipeCounter = 0;
-	ySwipeCounter = 0;
 	previousPoint = XMFLOAT2(0, 0);
 	appState = AppState::MainMenu;
 }
@@ -68,6 +66,12 @@ void Renderer::CreateWindowSizeDependentResources()
 void Renderer::Update(float timeTotal, float timeDelta)
 {
 	switch (appState) {
+	case AppState::MainMenu:
+		break;
+	case AppState::InGameSetup:
+		objectManager->Update(timeTotal, timeDelta);
+		vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
+		break;
 	case AppState::InGameRunning:
 		vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
 		puck->Update(timeTotal, timeDelta, vectorBoard->getClosestField(puck->getPosition()));
@@ -105,6 +109,13 @@ void Renderer::Render()
 	// Where my sprites will be drawn
 	m_spriteBatch->Begin();
 	switch (appState) {
+	case AppState::MainMenu:
+		break;
+	case AppState::InGameSetup:
+		vectorBoard->Draw(m_spriteBatch.get());
+		puck->Draw(m_spriteBatch.get());
+		objectManager->Draw(m_spriteBatch.get());
+		break;
 	case AppState::InGameRunning:
 		vectorBoard->Draw(m_spriteBatch.get());
 		puck->Draw(m_spriteBatch.get());
@@ -122,6 +133,18 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
 
 	switch (appState) {
+	case AppState::InGameSetup:
+		for (ElectricObject* thing : objectManager->getElectricObjects()) {
+			if (onSprite(thing, vectorPoint)) {
+				thing->isTouched(vectorPoint);
+				thing->isMoving = true;
+				break;	// break because we only want one charge to be moving
+			}
+		}
+
+		// Check for if a object should be created.
+		objectManager->checkForCreateObject(vectorPoint);
+		break;
 	case AppState::InGameRunning:
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (onSprite(thing, vectorPoint)) {
@@ -144,10 +167,23 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
 	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
-	previousPoint = XMFLOAT2(0, 0);
 
 	switch (appState) {
+	case AppState::MainMenu:
+		appState = AppState::InGameSetup;
+	case AppState::InGameSetup:	// running and setup do same stuff
+		previousPoint = XMFLOAT2(0, 0);
+		for (ElectricObject* thing : objectManager->getElectricObjects()) {
+			if (thing->isMoving) {
+				thing->isMoving = false;
+			}
+		}
+
+		// If you've dragged an object into the box
+		objectManager->checkForDeleteObject();
+		break;
 	case AppState::InGameRunning:
+		previousPoint = XMFLOAT2(0, 0);
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (thing->isMoving) {
 				thing->isMoving = false;
@@ -166,11 +202,28 @@ void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint
 
 void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
+	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
+	bool noneIsMoving = true;
 
 	switch (appState) {
+	case AppState::InGameSetup:
+		for (ElectricObject* thing : objectManager->getElectricObjects()) {
+			if (onSprite(thing, vectorPoint) && thing->isMoving) {
+				thing->isTouched(vectorPoint);
+				noneIsMoving = false;
+			}
+		}
+		if (noneIsMoving) {	// Made for specific case where, if you haven't selected any charge when you were moving, the first you move over becomes the charge that moves.
+			for (ElectricObject* thing : objectManager->getElectricObjects()) {
+				if (onSprite(thing, vectorPoint)) {
+					thing->isTouched(vectorPoint);
+					thing->isMoving = true;
+					break;
+				}
+			}
+		}
+		break;
 	case AppState::InGameRunning:
-		bool noneIsMoving = true;
-		XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (onSprite(thing, vectorPoint) && thing->isMoving) {
 				thing->isTouched(vectorPoint);

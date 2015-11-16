@@ -16,7 +16,4 @@ void Puck::Update(float timeTotal, float timeDelta, XMFLOAT2 currentField) {
 void Puck::calculateVelocity(XMFLOAT2 currentField) {
 	Velocity.x += currentField.x;
 	Velocity.y -= currentField.y;	// Negative because fields are measured in what we think is intuitive, not what the screen is measured in
-	if (touchingEdge) {
-		Velocity = XMFLOAT2(0, 0);
-	}
 }

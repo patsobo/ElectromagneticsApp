@@ -51,7 +51,5 @@ private:
 	bool onSprite(Sprite* thing, XMFLOAT2 point);
 
 	// Test variables
-	int xSwipeCounter;
-	int ySwipeCounter;
 	XMFLOAT2 previousPoint;
 };
