@@ -89,6 +89,7 @@ protected:
 	float Speed;
 	ID3D11ShaderResourceView* m_Texture;
 	SpriteEffects spriteEffects;
+	bool touchingEdge;
 
 	bool Blocked(XMFLOAT2 newPosition);
 	void UpdateAnimation(float timeTotal, float timeDelta);

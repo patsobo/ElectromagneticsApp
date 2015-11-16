@@ -28,6 +28,7 @@ public:
 	void HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint);	// called when pointer is released, alters state
 	void HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint);
 private:
+	AppState appState;
 	float scale;	// Scale for the screen (VERY IMPORTANT)
 	unique_ptr<SpriteBatch> m_spriteBatch;
 	ID3D11ShaderResourceView* arrowTexture;

@@ -11,6 +11,7 @@ Renderer::Renderer() {
 	xSwipeCounter = 0;
 	ySwipeCounter = 0;
 	previousPoint = XMFLOAT2(0, 0);
+	appState = AppState::MainMenu;
 }
 
 void Renderer::CreateDeviceResources()
@@ -62,17 +63,20 @@ void Renderer::CreateWindowSizeDependentResources()
 	// Create the puck
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/puck.dds", nullptr, &puckTexture, MAXSIZE_T);
 	puck = new Puck(puckTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width / 2, m_windowBounds.Height / 2), &m_windowBounds);
-
-	//electricObjects.push_back(charge);
-	//charge = new ElectricObject(chargeTexture, XMFLOAT2(500, 500), XMFLOAT2(400, 400), &m_windowBounds, boardSize);
-	//electricObjects.push_back(charge);
 }
 
 void Renderer::Update(float timeTotal, float timeDelta)
 {
-	vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
-	puck->Update(timeTotal, timeDelta, vectorBoard->getClosestField(puck->getPosition()));
-	objectManager->Update(timeTotal, timeDelta);
+	switch (appState) {
+	case AppState::InGameRunning:
+		vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
+		puck->Update(timeTotal, timeDelta, vectorBoard->getClosestField(puck->getPosition()));
+		objectManager->Update(timeTotal, timeDelta);
+		break;
+	default:
+		break;
+	}
+
 }
 
 void Renderer::Render()
@@ -100,63 +104,94 @@ void Renderer::Render()
 
 	// Where my sprites will be drawn
 	m_spriteBatch->Begin();
-	vectorBoard->Draw(m_spriteBatch.get());
-	puck->Draw(m_spriteBatch.get());
-	objectManager->Draw(m_spriteBatch.get());
+	switch (appState) {
+	case AppState::InGameRunning:
+		vectorBoard->Draw(m_spriteBatch.get());
+		puck->Draw(m_spriteBatch.get());
+		objectManager->Draw(m_spriteBatch.get());
+		break;
+	default:
+		break;
+	}
+	
 	m_spriteBatch->End();
 }
 
 void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
 	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
-	for (ElectricObject* thing : objectManager->getElectricObjects()) {
-		if (onSprite(thing, vectorPoint)) {
-			thing->isTouched(vectorPoint);
-			thing->isMoving = true;
-			break;	// break because we only want one charge to be moving
+
+	switch (appState) {
+	case AppState::InGameRunning:
+		for (ElectricObject* thing : objectManager->getElectricObjects()) {
+			if (onSprite(thing, vectorPoint)) {
+				thing->isTouched(vectorPoint);
+				thing->isMoving = true;
+				break;	// break because we only want one charge to be moving
+			}
 		}
+
+		// Check for if a object should be created.
+		objectManager->checkForCreateObject(vectorPoint);
+		break;
+	default:
+		break;
 	}
 
-	// Check for if a object should be created.
-	objectManager->checkForCreateObject(vectorPoint);
+
 }
 
 void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
 	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
-	xSwipeCounter = 0;
-	ySwipeCounter = 0;
 	previousPoint = XMFLOAT2(0, 0);
 
-	for (ElectricObject* thing : objectManager->getElectricObjects()) {
-		if (thing->isMoving) {
-			thing->isMoving = false;
+	switch (appState) {
+	case AppState::InGameRunning:
+		for (ElectricObject* thing : objectManager->getElectricObjects()) {
+			if (thing->isMoving) {
+				thing->isMoving = false;
+			}
 		}
+
+		// If you've dragged an object into the box
+		objectManager->checkForDeleteObject();
+		break;
+	default:
+		break;
 	}
 
-	// If you've dragged an object into the box
-	objectManager->checkForDeleteObject();
+
 }
 
 void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 {
-	bool noneIsMoving = true;
-	XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
-	for (ElectricObject* thing : objectManager->getElectricObjects()) {
-		if (onSprite(thing, vectorPoint) && thing->isMoving) {
-			thing->isTouched(vectorPoint);
-			noneIsMoving = false;
-		}
-	}
-	if (noneIsMoving) {	// Made for specific case where, if you haven't selected any charge when you were moving, the first you move over becomes the charge that moves.
+
+	switch (appState) {
+	case AppState::InGameRunning:
+		bool noneIsMoving = true;
+		XMFLOAT2 vectorPoint = XMFLOAT2(currentPoint->RawPosition.X * scale, currentPoint->RawPosition.Y * scale);
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
-			if (onSprite(thing, vectorPoint)) {
+			if (onSprite(thing, vectorPoint) && thing->isMoving) {
 				thing->isTouched(vectorPoint);
-				thing->isMoving = true;
-				break;
+				noneIsMoving = false;
+			}
 		}
+		if (noneIsMoving) {	// Made for specific case where, if you haven't selected any charge when you were moving, the first you move over becomes the charge that moves.
+			for (ElectricObject* thing : objectManager->getElectricObjects()) {
+				if (onSprite(thing, vectorPoint)) {
+					thing->isTouched(vectorPoint);
+					thing->isMoving = true;
+					break;
+				}
+			}
 		}
+		break;
+	default:
+		break;
 	}
+
+
 }
 
 bool Renderer::onSprite(Sprite* thing, XMFLOAT2 pointer)
