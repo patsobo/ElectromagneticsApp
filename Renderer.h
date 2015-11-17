@@ -46,9 +46,14 @@ private:
 	map<Sprite*, ID3D11ShaderResourceView*> textures;
 	Puck* puck;
 	ID3D11ShaderResourceView* puckTexture;
+	ID3D11ShaderResourceView* resetButtonTexture;
+	Sprite* resetButton;
+	ID3D11ShaderResourceView* startButtonTexture;
+	Sprite* startButton;
 	//vector<ElectricObject*> electricObjects;
 
 	bool onSprite(Sprite* thing, XMFLOAT2 point);
+	void reset();
 
 	// Test variables
 	XMFLOAT2 previousPoint;

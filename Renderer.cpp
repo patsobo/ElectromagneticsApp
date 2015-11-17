@@ -61,6 +61,18 @@ void Renderer::CreateWindowSizeDependentResources()
 	// Create the puck
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/puck.dds", nullptr, &puckTexture, MAXSIZE_T);
 	puck = new Puck(puckTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width / 2, m_windowBounds.Height / 2), &m_windowBounds);
+
+	//Create the start button
+	float buttonScale = 1.5;
+	XMFLOAT2 positionOfStart(0, m_windowBounds.Height - 49 * buttonScale);
+	XMFLOAT2 sizeOfButton(152, 49);
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/start_button.dds", nullptr, &startButtonTexture, MAXSIZE_T);
+	startButton = new Sprite(startButtonTexture, sizeOfButton, positionOfStart, &m_windowBounds, buttonScale);
+
+	//Create the reset button
+	XMFLOAT2 positionOfReset(152 * buttonScale, m_windowBounds.Height - 49 * buttonScale);
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/reset_button.dds", nullptr, &resetButtonTexture, MAXSIZE_T);
+	resetButton = new Sprite(resetButtonTexture, sizeOfButton, positionOfReset, &m_windowBounds, buttonScale);
 }
 
 void Renderer::Update(float timeTotal, float timeDelta)
@@ -71,11 +83,15 @@ void Renderer::Update(float timeTotal, float timeDelta)
 	case AppState::InGameSetup:
 		objectManager->Update(timeTotal, timeDelta);
 		vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
+		startButton->Update(timeTotal, timeDelta);
+		resetButton->Update(timeTotal, timeDelta);
 		break;
 	case AppState::InGameRunning:
 		vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
 		puck->Update(timeTotal, timeDelta, vectorBoard->getClosestField(puck->getPosition()));
 		objectManager->Update(timeTotal, timeDelta);
+		startButton->Update(timeTotal, timeDelta);
+		resetButton->Update(timeTotal, timeDelta);
 		break;
 	default:
 		break;
@@ -115,11 +131,15 @@ void Renderer::Render()
 		vectorBoard->Draw(m_spriteBatch.get());
 		puck->Draw(m_spriteBatch.get());
 		objectManager->Draw(m_spriteBatch.get());
+		resetButton->Draw(m_spriteBatch.get());
+		startButton->Draw(m_spriteBatch.get());
 		break;
 	case AppState::InGameRunning:
 		vectorBoard->Draw(m_spriteBatch.get());
 		puck->Draw(m_spriteBatch.get());
 		objectManager->Draw(m_spriteBatch.get());
+		resetButton->Draw(m_spriteBatch.get());
+		startButton->Draw(m_spriteBatch.get());
 		break;
 	default:
 		break;
@@ -134,6 +154,10 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 
 	switch (appState) {
 	case AppState::InGameSetup:
+		if (onSprite(startButton, vectorPoint)) {	// start button is pressed
+			appState = AppState::InGameRunning;
+		}
+
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (onSprite(thing, vectorPoint)) {
 				thing->isTouched(vectorPoint);
@@ -156,6 +180,10 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 
 		// Check for if a object should be created.
 		objectManager->checkForCreateObject(vectorPoint);
+		if (onSprite(resetButton, vectorPoint)) {	// start button is pressed
+			reset();
+			appState = AppState::InGameSetup;
+		}
 		break;
 	default:
 		break;
@@ -171,7 +199,8 @@ void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint
 	switch (appState) {
 	case AppState::MainMenu:
 		appState = AppState::InGameSetup;
-	case AppState::InGameSetup:	// running and setup do same stuff
+		break;
+	case AppState::InGameSetup:
 		previousPoint = XMFLOAT2(0, 0);
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (thing->isMoving) {
@@ -182,7 +211,7 @@ void Renderer::HandleReleaseInput(Windows::UI::Input::PointerPoint^ currentPoint
 		// If you've dragged an object into the box
 		objectManager->checkForDeleteObject();
 		break;
-	case AppState::InGameRunning:
+	case AppState::InGameRunning:	// same as the set up
 		previousPoint = XMFLOAT2(0, 0);
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (thing->isMoving) {
@@ -223,7 +252,7 @@ void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 			}
 		}
 		break;
-	case AppState::InGameRunning:
+	case AppState::InGameRunning:	// either running or setting up
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (onSprite(thing, vectorPoint) && thing->isMoving) {
 				thing->isTouched(vectorPoint);
@@ -254,4 +283,9 @@ bool Renderer::onSprite(Sprite* thing, XMFLOAT2 pointer)
 	if (thing->getBoundingBox()->Contains(point))
 		return true;
 	return false;
+}
+
+void Renderer::reset() {
+	puck->reset();
+	objectManager->getElectricObjects().clear();
 }
