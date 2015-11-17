@@ -157,6 +157,9 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 		if (onSprite(startButton, vectorPoint)) {	// start button is pressed
 			appState = AppState::InGameRunning;
 		}
+		if (onSprite(resetButton, vectorPoint)) {	// start button is pressed
+			reset();
+		}
 
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
 			if (onSprite(thing, vectorPoint)) {
@@ -287,5 +290,5 @@ bool Renderer::onSprite(Sprite* thing, XMFLOAT2 pointer)
 
 void Renderer::reset() {
 	puck->reset();
-	objectManager->getElectricObjects().clear();
+	objectManager->reset();
 }

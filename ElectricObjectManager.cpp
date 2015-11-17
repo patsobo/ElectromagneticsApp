@@ -68,4 +68,11 @@ void ElectricObjectManager::checkForCreateObject(XMFLOAT2 point) {
 	}
 }
 
+void ElectricObjectManager::reset() {
+	for (ElectricObject* object : electricObjects) {
+		delete object;	// clear the actual data
+	}
+	electricObjects.clear();	// clear the list of objects
+}
+
 vector<ElectricObject*> ElectricObjectManager::getElectricObjects() { return electricObjects; }

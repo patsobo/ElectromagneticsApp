@@ -14,6 +14,7 @@ public:
 	void checkForCreateObject(XMFLOAT2 point);	// Called when box is touched
 	void checkForDeleteObject();	// Called when touch is released over box
 	vector<ElectricObject*> getElectricObjects();
+	void reset();
 
 private:
 	vector<ElectricObject*> electricObjects;
