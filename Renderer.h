@@ -50,6 +50,7 @@ private:
 	Sprite* resetButton;
 	ID3D11ShaderResourceView* startButtonTexture;
 	Sprite* startButton;
+	Windows::Foundation::Rect* puckBounds;
 	//vector<ElectricObject*> electricObjects;
 
 	bool onSprite(Sprite* thing, XMFLOAT2 point);

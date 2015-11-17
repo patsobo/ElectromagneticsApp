@@ -60,7 +60,8 @@ void Renderer::CreateWindowSizeDependentResources()
 
 	// Create the puck
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/puck.dds", nullptr, &puckTexture, MAXSIZE_T);
-	puck = new Puck(puckTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width / 2, m_windowBounds.Height / 2), &m_windowBounds);
+	puckBounds = new Rect(-1 * m_windowBounds.Width, -1 * m_windowBounds.Height, 3 * m_windowBounds.Width, 3 * m_windowBounds.Height);
+	puck = new Puck(puckTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width / 2, m_windowBounds.Height / 2), puckBounds);
 
 	//Create the start button
 	float buttonScale = 1.5;

@@ -62,8 +62,16 @@ XMFLOAT2 VectorBoard::getClosestField(XMFLOAT2 position) {
 	if (position.x - x*unitLength.x > unitLength.x / 2 && x < board.size() - 1)
 		x++;
 	int y = position.y / unitLength.y - 1;
+
 	if (position.y - y*unitLength.y > unitLength.y / 2 && y < board[0].size() - 1)
 		y++;
+
+	// Fix boundary errors
+	y = y < 0 ? 0 : y;
+	x = x < 0 ? 0 : x;
+	x = x > board.size() - 1 ? board.size() - 1 : x;
+	y = y > board[x].size() - 1 ? board[x].size() - 1 : y;
+
 	return board[x][y]->getFieldLine();
 }
 
