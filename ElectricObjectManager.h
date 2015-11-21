@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "ElectricObject.h"
+#include "MagneticObject.h"
 #include <map>
 
 class ElectricObjectManager {
@@ -15,6 +16,7 @@ public:
 	void checkForDeleteObject();	// Called when touch is released over box
 	vector<ElectricObject*> getElectricObjects();
 	void reset();
+	void addObject(ElectricObject* object);	// TEST METHOD
 
 private:
 	vector<ElectricObject*> electricObjects;

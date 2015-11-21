@@ -6,10 +6,10 @@ static float K = 100000;
 class ElectricObject : public Sprite {
 
 public:
-	ElectricObject(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMFLOAT2 boardSize, int charge);
+	ElectricObject(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMFLOAT2 boardSize, int charge, float scale);
 
-	void isTouched(XMFLOAT2 point);
-	XMFLOAT2 calculateField(XMFLOAT2 position);
+	virtual void isTouched(XMFLOAT2 point);
+	virtual XMFLOAT2 calculateField(XMFLOAT2 position);
 
 	// Ehh....
 	bool isMoving;

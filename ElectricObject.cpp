@@ -4,8 +4,8 @@
 
 // TODO: Make ElectricObject a child of Sprite
 
-ElectricObject::ElectricObject(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMFLOAT2 boardSize, int charge) : 
-Sprite(m_Texture, size, position, movementBounds, .1, 0, XMFLOAT2(size.x / 2, size.y / 2))
+ElectricObject::ElectricObject(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMFLOAT2 boardSize, int charge, float scale) : 
+Sprite(m_Texture, size, position, movementBounds, scale, 0, XMFLOAT2(size.x / 2, size.y / 2))
 {
 	this->isMoving = false;
 	charge = charge / abs(charge);	// get a magnitude one value

@@ -5,6 +5,7 @@
 #include "Slider.h"
 #include "AppState.h"
 #include "ElectricObjectManager.h"
+#include "MagneticObject.h"
 #include "Puck.h"
 #include <map>
 
@@ -53,6 +54,11 @@ private:
 	ID3D11ShaderResourceView* pauseButtonTexture;
 	Sprite* pauseButton;
 	Windows::Foundation::Rect* puckBounds;
+	ID3D11ShaderResourceView* wireTexture;
+	ID3D11ShaderResourceView* wireBoxTexture;
+	Sprite* wireBox;
+	MagneticObject* wire;
+
 	//vector<ElectricObject*> electricObjects;
 
 	bool onSprite(Sprite* thing, XMFLOAT2 point);

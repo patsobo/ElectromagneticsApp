@@ -42,7 +42,7 @@ void Renderer::CreateWindowSizeDependentResources()
 	// Create the positive charge
 	posChargeTexture = nullptr;
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge.dds", nullptr, &posChargeTexture, MAXSIZE_T);
-	posCharge = new ElectricObject(posChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, 1);
+	posCharge = new ElectricObject(posChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, 1, .1);
 	chargeBoxTexture = nullptr;
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/charge_box.dds", nullptr, &chargeBoxTexture, MAXSIZE_T);
 	chargeBox = new Sprite(chargeBoxTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width - 100, m_windowBounds.Height - 100), &m_windowBounds, .2);
@@ -50,13 +50,23 @@ void Renderer::CreateWindowSizeDependentResources()
 
 	// Create the negative charge
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/neg_charge.dds", nullptr, &negChargeTexture, MAXSIZE_T);
-	negCharge = new ElectricObject(negChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, -1);
+	negCharge = new ElectricObject(negChargeTexture, XMFLOAT2(500, 500), XMFLOAT2(100, 100), &m_windowBounds, boardSize, -1, .1);
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/neg_charge_box.dds", nullptr, &negChargeBoxTexture, MAXSIZE_T);
 	negChargeBox = new Sprite(negChargeBoxTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width - 200, m_windowBounds.Height - 100), &m_windowBounds, .2);
 	textures[negChargeBox] = negChargeTexture;
 
+	// Create the wire
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/wire.dds", nullptr, &wireTexture, MAXSIZE_T);
+	wire = new MagneticObject(wireTexture, XMFLOAT2(768, 20), XMFLOAT2(m_windowBounds.Width / 2, 500), &m_windowBounds, boardSize, .0001f, 1);
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/wire_box.dds", nullptr, &wireBoxTexture, MAXSIZE_T);
+	wireBox = new Sprite(wireBoxTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width - 300, m_windowBounds.Height - 100), &m_windowBounds, .2);
+	textures[wireBox] = wireTexture;
+
 	// Create the charge box and the electric object manager
 	objectManager = new ElectricObjectManager(textures, XMFLOAT2(500, 500), &m_windowBounds, boardSize);
+
+	// TEST PURPOSES ONLY
+	//objectManager->addObject(wire);
 
 	// Create the puck
 	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/puck.dds", nullptr, &puckTexture, MAXSIZE_T);

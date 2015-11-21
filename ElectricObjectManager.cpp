@@ -54,15 +54,25 @@ void ElectricObjectManager::checkForCreateObject(XMFLOAT2 point) {
 		auto creationBox = pairs.first;
 		auto posBox = *creationBox->getBoundingBox();	// the bounding box
 		if (creationBox->getBoundingBox()->Contains(pointPoint)) {
-			position = XMFLOAT2(posBox.X + posBox.Width / 2, posBox.Y + posBox.Height / 2);	// Set position correctly
 
-			// I'm going to cry from this solution, but it's so late, so...
-			// Yes, I'll determine charge from position.
-			int charge = (position.x - (movementBounds->Width - posBox.Width)) / abs(position.x - (movementBounds->Width - posBox.Width));
+			if (point.x < movementBounds->Width - posBox.Width * 2) {	// if wire
+				position = XMFLOAT2(movementBounds->Width / 2, posBox.Y);
+				float current = .0001f;
+				auto texture = textures[creationBox];
+				electricObjects.push_back(new MagneticObject(texture, XMFLOAT2(768, 20), position, movementBounds, boardSize, current, 1));
+				electricObjects[electricObjects.size() - 1]->isMoving = true;
+			}
+			else {	// if charge object
+				position = XMFLOAT2(posBox.X + posBox.Width / 2, posBox.Y + posBox.Height / 2);	// Set position correctly
 
-			auto texture = textures[creationBox];
-			electricObjects.push_back(new ElectricObject(texture, size, position, movementBounds, boardSize, charge));
-			electricObjects[electricObjects.size() - 1]->isMoving = true;
+				// I'm going to cry from this solution, but it's so late, so...
+				// Yes, I'll determine charge from position.
+				int charge = (position.x - (movementBounds->Width - posBox.Width)) / abs(position.x - (movementBounds->Width - posBox.Width));
+
+				auto texture = textures[creationBox];
+				electricObjects.push_back(new ElectricObject(texture, size, position, movementBounds, boardSize, charge, .1));
+				electricObjects[electricObjects.size() - 1]->isMoving = true;
+			}
 			return;
 		}
 	}
@@ -76,3 +86,8 @@ void ElectricObjectManager::reset() {
 }
 
 vector<ElectricObject*> ElectricObjectManager::getElectricObjects() { return electricObjects; }
+
+// TEST METHOD
+void ElectricObjectManager::addObject(ElectricObject* object) {
+	electricObjects.push_back(object);
+}
