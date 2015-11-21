@@ -50,6 +50,8 @@ private:
 	Sprite* resetButton;
 	ID3D11ShaderResourceView* startButtonTexture;
 	Sprite* startButton;
+	ID3D11ShaderResourceView* pauseButtonTexture;
+	Sprite* pauseButton;
 	Windows::Foundation::Rect* puckBounds;
 	//vector<ElectricObject*> electricObjects;
 

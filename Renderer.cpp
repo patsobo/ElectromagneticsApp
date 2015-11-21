@@ -64,16 +64,21 @@ void Renderer::CreateWindowSizeDependentResources()
 	puck = new Puck(puckTexture, XMFLOAT2(500, 500), XMFLOAT2(m_windowBounds.Width / 2, m_windowBounds.Height / 2), puckBounds);
 
 	//Create the start button
-	float buttonScale = 1.5;
-	XMFLOAT2 positionOfStart(0, m_windowBounds.Height - 49 * buttonScale);
-	XMFLOAT2 sizeOfButton(152, 49);
-	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/start_button.dds", nullptr, &startButtonTexture, MAXSIZE_T);
+	float buttonScale = .3;
+	XMFLOAT2 sizeOfButton(210, 235);
+	XMFLOAT2 positionOfStart(m_windowBounds.Width - sizeOfButton.x*buttonScale - 30, 30);
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/play_button.dds", nullptr, &startButtonTexture, MAXSIZE_T);
 	startButton = new Sprite(startButtonTexture, sizeOfButton, positionOfStart, &m_windowBounds, buttonScale);
+	//Create the pause button
+	sizeOfButton = XMFLOAT2(189, 217);
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/pause_button.dds", nullptr, &pauseButtonTexture, MAXSIZE_T);
+	pauseButton = new Sprite(pauseButtonTexture, sizeOfButton, positionOfStart, &m_windowBounds, buttonScale);
 
 	//Create the reset button
-	XMFLOAT2 positionOfReset(152 * buttonScale, m_windowBounds.Height - 49 * buttonScale);
-	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/reset_button.dds", nullptr, &resetButtonTexture, MAXSIZE_T);
-	resetButton = new Sprite(resetButtonTexture, sizeOfButton, positionOfReset, &m_windowBounds, buttonScale);
+	XMFLOAT2 sizeOfReset(248, 210);
+	positionOfStart.y += sizeOfButton.y*buttonScale + 30;
+	CreateDDSTextureFromFile(m_d3dDevice.Get(), L"Assets/reset_button_2.dds", nullptr, &resetButtonTexture, MAXSIZE_T);
+	resetButton = new Sprite(resetButtonTexture, sizeOfReset, positionOfStart, &m_windowBounds, buttonScale);
 }
 
 void Renderer::Update(float timeTotal, float timeDelta)
@@ -91,7 +96,7 @@ void Renderer::Update(float timeTotal, float timeDelta)
 		vectorBoard->Update(timeTotal, timeDelta, objectManager->getElectricObjects());
 		puck->Update(timeTotal, timeDelta, vectorBoard->getClosestField(puck->getPosition()));
 		objectManager->Update(timeTotal, timeDelta);
-		startButton->Update(timeTotal, timeDelta);
+		pauseButton->Update(timeTotal, timeDelta);
 		resetButton->Update(timeTotal, timeDelta);
 		break;
 	default:
@@ -140,7 +145,7 @@ void Renderer::Render()
 		puck->Draw(m_spriteBatch.get());
 		objectManager->Draw(m_spriteBatch.get());
 		resetButton->Draw(m_spriteBatch.get());
-		startButton->Draw(m_spriteBatch.get());
+		pauseButton->Draw(m_spriteBatch.get());
 		break;
 	default:
 		break;
@@ -170,7 +175,7 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 			}
 		}
 
-		// Check for if a object should be created.
+		// Check for if an object should be created.
 		objectManager->checkForCreateObject(vectorPoint);
 		break;
 	case AppState::InGameRunning:
@@ -182,7 +187,12 @@ void Renderer::HandlePressInput(Windows::UI::Input::PointerPoint^ currentPoint)
 			}
 		}
 
-		// Check for if a object should be created.
+		// Check if should pause game.
+		if (onSprite(pauseButton, vectorPoint)) {
+			appState = AppState::InGameSetup;
+		}
+
+		// Check for if an object should be created.
 		objectManager->checkForCreateObject(vectorPoint);
 		if (onSprite(resetButton, vectorPoint)) {	// start button is pressed
 			reset();
@@ -241,7 +251,11 @@ void Renderer::HandleMoveInput(Windows::UI::Input::PointerPoint^ currentPoint)
 	switch (appState) {
 	case AppState::InGameSetup:
 		for (ElectricObject* thing : objectManager->getElectricObjects()) {
-			if (onSprite(thing, vectorPoint) && thing->isMoving) {
+			//if (onSprite(thing, vectorPoint) && thing->isMoving) {	// code for allowing multi-touch
+			//	thing->isTouched(vectorPoint);
+			//	noneIsMoving = false;
+			//}
+			if (thing->isMoving) {	// code for allowing fast movement
 				thing->isTouched(vectorPoint);
 				noneIsMoving = false;
 			}
