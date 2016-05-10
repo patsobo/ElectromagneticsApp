@@ -1,0 +1,110 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="ElectromagnetismProject.EquationsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <phone:Panorama Title="equations">
+
+            <!--Panorama item one-->
+            <phone:PanoramaItem Header="right-hand rule">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="375"/>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="175"/>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="75"/>
+                        </Grid.RowDefinitions>
+
+
+                        <TextBlock Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top">
+                    		<Run Text="The right hand rule is a way to standardize the direction of resultant vectors.  In the context of the game, it is used to calculate in which direction both the magnetic field (B) and resultant force (that creates the actual movement) occurs."/>
+                    		<LineBreak/>
+                    		<Run/>
+                    		<LineBreak/>
+                    		<Run Text="The below image demonstrates how the direction of the magnetic field is determined.  If you think about it, placing the current flow on a 2D plane means that the magnetic field is into the page on one side and out of the page on the other side."/>
+                        </TextBlock>
+                        <Image Grid.Row="1" Source="Assets/right-hand-wire.png"></Image>
+                        <TextBlock TextWrapping="Wrap" FontSize="12" Grid.Row="2" Text="Image Credit: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Manoderecha.svg/2000px-Manoderecha.svg.png"></TextBlock>
+                        <TextBlock Grid.Row="3" TextWrapping="Wrap">
+                            <Run Text="Down below is another image now describing how force could be calculated from the magnetic field.  If you imagine the 'current' vector as the velocity of the particle, then you'll see how the magnetic field influences the movement of the particle."></Run>
+                        </TextBlock>
+                        <Image Grid.Row="4" Source="Assets/right-hand-velocity.png"></Image>
+                        <TextBlock TextWrapping="Wrap" FontSize="12" Grid.Row="5" Text="Image Credit: https://d2gne97vdumgn3.cloudfront.net/api/file/jykOLZyTcOjR9MBPCwVA"></TextBlock>
+                    </Grid>
+                </ScrollViewer>
+
+            </phone:PanoramaItem>
+
+            <!--Panorama item two-->
+            <phone:PanoramaItem Header="electric field">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="75"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+
+                    <Image Grid.Row="0" Source="Assets/electric_field.gif"></Image>
+                    <TextBlock TextWrapping="Wrap" FontSize="12" Grid.Row="1" Text="Image Credit: http://regentsprep.org/Regents/physics/phys03/afieldint/hybrid.gif"></TextBlock>
+                    <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="The electric field for a point charge is a simple calculation, modeled by the above equation.  The r term is squared, meaning the strength drops off dramatically as distance increases, more so than the magnetic field strength."/>
+                </Grid>
+            </phone:PanoramaItem>
+
+            <!--Panorama item three-->
+            <phone:PanoramaItem Header="magnetic field">
+                <ScrollViewer>
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="300"/>
+                        </Grid.RowDefinitions>
+
+                        <Image Grid.Row="0" Source="Assets/magnetic_field.jpg"></Image>
+                        <TextBlock TextWrapping="Wrap" FontSize="12" Grid.Row="1" Text="Image Credit: http://o.quizlet.com/i/nIa_ZhGejjIxUMZUw9t6lA_m.jpg"></TextBlock>
+                        <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="The magnetic field generated by an infinite wire can be simplified to the above equation.  The direction of the magnetic field is also determined by the right-hand rule (swipe to find how that works).  The r term on the bottom means the strength decreases as distance from the wire increases - though not as dramatically as for the electric field calculation."/>
+                    </Grid>
+                </ScrollViewer>
+            </phone:PanoramaItem>
+
+            <!--Panorama item four-->
+            <phone:PanoramaItem Header="lorentz's law">
+                <Grid>
+                    <ScrollViewer>
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200"/>
+                                <RowDefinition Height="75"/>
+                                <RowDefinition Height="300"/>
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Row="0" Source="Assets/lorentz.png"></Image>
+                            <TextBlock TextWrapping="Wrap" FontSize="12" Grid.Row="1" Text="Image Credit: http://scienceblogs.com/principles/wp-content/blogs.dir/467/files/2012/04/i-564dd5e4107649b95e4366799d24b3f3-dec12_lorentz_force.png"></TextBlock>
+                            <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="The final piece of the puzzle is Lorentz's Law, which describes how force is calculated from electric and magnetic fields.  The q is the charge of the particle - in the game, the particle is positively charged.  the cross product seen in the v x B term is described in the right-hand rule tab, which you can find be swiping to the right."/>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </phone:PanoramaItem>
+        </phone:Panorama>
+    </Grid>
+
+</phone:PhoneApplicationPage>

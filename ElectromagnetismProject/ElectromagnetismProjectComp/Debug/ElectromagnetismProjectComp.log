@@ -1,0 +1,90 @@
+﻿Build started 12/4/2015 10:13:17 AM.
+     1>Project "C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\ElectromagnetismProject\ElectromagnetismProjectComp\ElectromagnetismProjectComp.vcxproj" on node 2 (Build target(s)).
+     1>FxCompile:
+         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\fxc.exe /nologo /E"main" /T ps_4_0_level_9_3 /Fo "C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\SimplePixelShader.cso" /Zi SimplePixelShader.hlsl 
+         compilation object save succeeded; see C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\SimplePixelShader.cso
+         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\fxc.exe /nologo /E"main" /T vs_4_0_level_9_3 /Fo "C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\SimpleVertexShader.cso" /Zi SimpleVertexShader.hlsl 
+         compilation object save succeeded; see C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\SimpleVertexShader.cso
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /IC:\Users\patrick\Documents\DirectXTK\Inc /I"C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\ElectromagnetismProject\ElectromagnetismProjectComp\\" /I"Generated Files\\" /IDebug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /ZW /ZW:nostdlib /nologo /W3 /WX- /sdl /MP /Od /Oy- /D _WINRT_DLL /D _WINDLL /D _UNICODE /D UNICODE /D _DEBUG /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"pch.h" /Fp"Debug\ElectromagnetismProjectComp.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt pch.cpp
+         pch.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /IC:\Users\patrick\Documents\DirectXTK\Inc /I"C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\ElectromagnetismProject\ElectromagnetismProjectComp\\" /I"Generated Files\\" /IDebug\ /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /ZW /ZW:nostdlib /nologo /W3 /WX- /sdl /MP /Od /Oy- /D _WINRT_DLL /D _WINDLL /D _UNICODE /D UNICODE /D _DEBUG /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"pch.h" /Fp"Debug\ElectromagnetismProjectComp.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /FU"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\lib\platform.winmd" /FU"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata\Windows.winmd" /analyze- /errorReport:prompt Direct3DInterop.cpp Direct3DBase.cpp Direct3DContentProvider.cpp ElectricObject.cpp ElectricObjectManager.cpp MagneticObject.cpp Puck.cpp Renderer.cpp Slider.cpp Sprite.cpp Spritesheet.cpp VectorBoard.cpp VectorCell.cpp
+         Direct3DInterop.cpp
+         Direct3DBase.cpp
+         Direct3DContentProvider.cpp
+         ElectricObject.cpp
+         ElectricObjectManager.cpp
+         MagneticObject.cpp
+         Puck.cpp
+         Renderer.cpp
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\puck.cpp(6): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\magneticobject.cpp(28): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\electricobjectmanager.cpp(39): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\electricobjectmanager.cpp(55): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\electricobjectmanager.cpp(86): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\electricobjectmanager.cpp(89): warning C4305: 'argument' : truncation from 'double' to 'float'
+         Slider.cpp
+         Sprite.cpp
+         Spritesheet.cpp
+         VectorBoard.cpp
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\sprite.cpp(83): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\sprite.cpp(108): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\sprite.cpp(141): warning C4244: '=' : conversion from 'float' to 'LONG', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\sprite.cpp(142): warning C4244: '=' : conversion from 'float' to 'LONG', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\sprite.cpp(143): warning C4244: '=' : conversion from 'float' to 'LONG', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\sprite.cpp(144): warning C4244: '=' : conversion from 'float' to 'LONG', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\sprite.cpp(148): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\spritesheet.cpp(24): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\spritesheet.cpp(39): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\slider.cpp(21): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\slider.cpp(39): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
+         VectorCell.cpp
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\slider.cpp(48): warning C4715: 'Slider::calculateDivot' : not all control paths return a value
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(19): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(34): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(39): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(45): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(48): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(53): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(55): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(62): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(77): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(28): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(29): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(38): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(39): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(47): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(48): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(61): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(62): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(64): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(66): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(72): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(73): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\renderer.cpp(121): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(100): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorboard.cpp(101): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\visual studio 2013\projects\electromagnetismproject\electromagnetismproject\electromagnetismprojectcomp\vectorcell.cpp(28): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\ElectromagnetismProjectComp.dll" /INCREMENTAL /NOLOGO d3d11.lib WindowsPhoneCore.lib RuntimeObject.lib PhoneAppModelHost.lib /NODEFAULTLIB:ole32.lib /MANIFEST:NO /DEBUG /PDB:"C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\ElectromagnetismProjectComp.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /WINMD /WINMDFILE:"C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\ElectromagnetismProjectComp.winmd" /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /DLL Debug\Direct3DInterop.obj
+         Debug\Direct3DBase.obj
+         Debug\Direct3DContentProvider.obj
+         Debug\ElectricObject.obj
+         Debug\ElectricObjectManager.obj
+         Debug\MagneticObject.obj
+         Debug\pch.obj
+         Debug\Puck.obj
+         Debug\Renderer.obj
+         Debug\Slider.obj
+         Debug\Sprite.obj
+         Debug\Spritesheet.obj
+         Debug\VectorBoard.obj
+         Debug\VectorCell.obj
+         C:\Users\patrick\documents\DirectXTK\Bin\WindowsPhone8\Win32\Debug\DirectXTK.lib
+            Creating library C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\ElectromagnetismProjectComp.lib and object C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\ElectromagnetismProjectComp.exp
+         ElectromagnetismProjectComp.vcxproj -> C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\Debug\ElectromagnetismProjectComp\ElectromagnetismProjectComp.dll
+     1>Done Building Project "C:\Users\patrick\documents\visual studio 2013\Projects\ElectromagnetismProject\ElectromagnetismProject\ElectromagnetismProjectComp\ElectromagnetismProjectComp.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:19.95
