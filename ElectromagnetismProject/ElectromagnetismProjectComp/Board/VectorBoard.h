@@ -7,8 +7,8 @@
 #include <list>
 #include <vector>
 #include "VectorCell.h"
-#include "ChargedObjects/ElectricObject.h"
-#include "ChargedObjects/MagneticObject.h"
+#include "../ChargedObjects/ElectricObject.h"
+#include "../ChargedObjects/MagneticObject.h"
 
 using namespace DirectX;
 using namespace std;

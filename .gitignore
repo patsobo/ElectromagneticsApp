@@ -1,5 +1,9 @@
 ElectromagnetismProject/ElectromagnetismProject/ARM/*
 ElectromagnetismProject/ElectromagnetismProjectComp/ARM/*
+ElectromagnetismProject/ElectromagnetismProject/Bin/*
+ElectromagnetismProject/ElectromagnetismProjectComp/Bin/*
+ElectromagnetismProject/ElectromagnetismProject/obj/*
+ElectromagnetismProject/ElectromagnetismProjectComp/obj/*
 ElectromagnetismProject/ElectromagnetismProject/Assets/*
 ElectromagnetismProject/ElectromagnetismProjectComp/Assets/*
 ElectromagnetismProject/ElectromagnetismProject/Debug/*

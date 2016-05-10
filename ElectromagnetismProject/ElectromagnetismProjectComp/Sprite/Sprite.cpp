@@ -5,7 +5,7 @@ using namespace DirectX;
 using namespace std;
 
 Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, float scale, float Speed, XMFLOAT2 origin) :
-m_Texture(m_Texture), size(size), position(position), movementBounds(movementBounds), rows(1), columns(1), framesPerSecond(1), Velocity(XMFLOAT2(0, 0))
+m_Texture(m_Texture), position(position), movementBounds(movementBounds), framesPerSecond(1), Velocity(XMFLOAT2(0, 0))
 {
 	this->position = position;
 	this->movementBounds = movementBounds;
@@ -19,16 +19,14 @@ m_Texture(m_Texture), size(size), position(position), movementBounds(movementBou
 
 	animationState = 0;
 	currentFrame = 0;
-	totalFrames = rows*columns;
 	BoundingBox = CreateBoundingBoxFromPosition(Sprite::position);
-	shouldChangeAnimation = false;
 	timeSinceLastFrame = 0;
 	rotation = 0.0f;
 	spriteEffects = SpriteEffects_None;
 }
 
 Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, XMVECTORF32* color, float scale, float Speed, XMFLOAT2 origin) :
-m_Texture(m_Texture), size(size), position(position), movementBounds(movementBounds), rows(1), columns(1), framesPerSecond(1), Velocity(XMFLOAT2(0, 0))
+m_Texture(m_Texture), position(position), movementBounds(movementBounds), framesPerSecond(1), Velocity(XMFLOAT2(0, 0))
 {
 	this->position = position;
 	this->movementBounds = movementBounds;
@@ -42,35 +40,11 @@ m_Texture(m_Texture), size(size), position(position), movementBounds(movementBou
 
 	animationState = 0;
 	currentFrame = 0;
-	totalFrames = rows*columns;
 	BoundingBox = CreateBoundingBoxFromPosition(Sprite::position);
-	shouldChangeAnimation = false;
 	timeSinceLastFrame = 0;
 	rotation = 0.0f;
 	spriteEffects = SpriteEffects_None;
 }
-
-//Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, float scale) :
-//m_Texture(m_Texture), size(size), position(position), movementBounds(movementBounds), rows(1), columns(1), framesPerSecond(1)
-//{
-//	this->position = position;
-//	this->movementBounds = movementBounds;
-//	this->m_Texture = m_Texture;
-//	this->size = size;
-//	this->scale = scale;
-//
-//	for (int i = 0; i < 5; i++)
-//	{
-//		this->dividers[i] = 0;
-//	}
-//
-//	animationState = 0;
-//	currentFrame = 0;
-//	totalFrames = rows*columns;
-//	BoundingBox = CreateBoundingBoxFromPosition(Sprite::position);
-//	shouldChangeAnimation = false;
-//	timeSinceLastFrame = 0;
-//}
 
 Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds, int rows, int columns,
 	double framesPerSecond, int dividers[])
@@ -78,21 +52,16 @@ Sprite::Sprite(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 posi
 	this->position = position;
 	this->initialPosition = position;
 	this->movementBounds = movementBounds;
-	this->rows = rows;
-	this->columns = columns;
 	this->framesPerSecond = framesPerSecond;
 	this->spritesheet = Spritesheet(size);
 	scale = 1;
 	this->color = Colors::White;
 
 	this->m_Texture = m_Texture;
-	this->size = size;
 
 	animationState = 0;
 	currentFrame = 0;
-	totalFrames = rows*columns;
 	BoundingBox = CreateBoundingBoxFromPosition(this->position);
-	shouldChangeAnimation = false;
 	timeSinceLastFrame = 0;
 	rotation = 0.0f;
 	spriteEffects = SpriteEffects_None;
@@ -122,18 +91,6 @@ Sprite::Sprite(Spritesheet* spritesheet, ID3D11ShaderResourceView *m_Texture, XM
 
 void Sprite::Draw(SpriteBatch* spriteBatch)
 {
-	//double imageWidth = size.x / columns;
-	//double imageHeight = size.y / rows;
-
-	//int currentRow = currentFrame / columns;
-	//int currentColumn = currentFrame%columns;
-
-	//RECT* sourceRectangle = new RECT;
-	//sourceRectangle->left = imageWidth*currentColumn;
-	//sourceRectangle->top = imageHeight*currentRow;
-	//sourceRectangle->right = imageWidth*currentColumn + imageWidth;
-	//sourceRectangle->bottom = imageHeight*currentRow + imageHeight;
-
 	double imageWidth = spritesheet.currentSize.x;
 	double imageHeight = spritesheet.currentSize.y;
 
@@ -158,41 +115,6 @@ void Sprite::Update(float timeTotal, float timeDelta)
 void Sprite::UpdateAnimation(float timeTotal, float timeDelta)
 {
 	timeSinceLastFrame += timeDelta;
-
-	//if (timeSinceLastFrame > SecondsBetweenFrames() && !shouldChangeAnimation)	//continue animating as normal
-	//{
-	//	currentFrame++;
-	//	timeSinceLastFrame = 0;
-	//}
-
-	////else if (shouldChangeAnimation && inSecondAnimation)	//if should change out of second animation, go to first animation
-	////{
-	////	currentFrame = 0;
-	////	timeSinceLastFrame = 0;
-	////	shouldChangeAnimation = false;
-	////}
-
-	//else if (shouldChangeAnimation)	//go to specified animation
-	//{
-	//	currentFrame = dividers[animationState];
-	//	timeSinceLastFrame = 0;
-	//	shouldChangeAnimation = false;
-	//	animationPlayedOnce = false;
-	//}
-
-	////looping conditional statements
-	//if (currentFrame == dividers[animationState + 1] - 1 && dividers[animationState + 1] != 0)	//if you reach the end of your animation, loop that animation again
-	//{
-	//	currentFrame = dividers[animationState];
-	//	animationPlayedOnce = true;
-	//}
-
-	//else if (currentFrame == totalFrames)	//if at the end of sprite sheet, loop animation again
-	//{
-	//	currentFrame = dividers[animationState];
-	//	timeSinceLastFrame = 0;
-	//	animationPlayedOnce = true;
-	//}
 
 	// Continue animating as normal
 	if (timeSinceLastFrame > SecondsBetweenFrames())
