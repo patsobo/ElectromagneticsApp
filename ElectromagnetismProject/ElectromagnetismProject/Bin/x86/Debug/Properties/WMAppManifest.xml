@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{c10de760-d2c0-4a08-a14a-e6c796823253}" Title="Physics Fun" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="ElectromagnetismProject author" Description="An app meant to teach high school students basic electromagnetic principles using a more interactive approach." Publisher="ElectromagnetismProject" PublisherID="{64ed8df5-c1e3-4683-a8ef-6748ec7539b8}">
+  <App xmlns="" ProductID="{c10de760-d2c0-4a08-a14a-e6c796823253}" Title="Physics Fun" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Patrick Sobolewski" Description="An app meant to teach high school students basic electromagnetic principles using a more interactive approach." Publisher="Patsobo Studios" PublisherID="{64ed8df5-c1e3-4683-a8ef-6748ec7539b8}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
