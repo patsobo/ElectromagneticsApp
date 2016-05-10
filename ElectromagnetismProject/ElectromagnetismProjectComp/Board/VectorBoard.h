@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Sprite.h"
+#include "Sprite/Sprite.h"
 #include "DDSTextureLoader.h"
 #include <D3D11.h>
 #include "Windows.h"
 #include <list>
 #include <vector>
 #include "VectorCell.h"
-#include "ElectricObject.h"
-#include "MagneticObject.h"
+#include "ChargedObjects/ElectricObject.h"
+#include "ChargedObjects/MagneticObject.h"
 
 using namespace DirectX;
 using namespace std;

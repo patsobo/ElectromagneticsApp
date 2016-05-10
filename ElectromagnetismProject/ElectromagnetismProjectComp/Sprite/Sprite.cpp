@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Sprite.h"
+#include "Sprite/Sprite.h"
 
 using namespace DirectX;
 using namespace std;

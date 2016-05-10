@@ -1,10 +1,15 @@
-ElectromagnetismProject/ElectromagnetismProject*/ARM/*
-ElectromagnetismProject/ElectromagnetismProject*/Assets/*
-ElectromagnetismProject/ElectromagnetismProject*/Debug/*
-ElectromagnetismProject/ElectromagnetismProject*/Generated Files/*
+ElectromagnetismProject/ElectromagnetismProject/ARM/*
+ElectromagnetismProject/ElectromagnetismProjectComp/ARM/*
+ElectromagnetismProject/ElectromagnetismProject/Assets/*
+ElectromagnetismProject/ElectromagnetismProjectComp/Assets/*
+ElectromagnetismProject/ElectromagnetismProject/Debug/*
+ElectromagnetismProject/ElectromagnetismProjectComp/Debug/*
+ElectromagnetismProject/ElectromagnetismProject/Generated Files/*
+ElectromagnetismProject/ElectromagnetismProjectComp/Generated Files/*
 *.vcxproj*
 Debug/*
 ARM/*
 .vs/
 ElectromagnetismProject.*
 ipch/
+

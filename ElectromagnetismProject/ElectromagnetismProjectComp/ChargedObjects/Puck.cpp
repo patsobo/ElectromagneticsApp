@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Puck.h"
+#include "ChargedObjects/Puck.h"
 
 Puck::Puck(ID3D11ShaderResourceView *m_Texture, XMFLOAT2 size, XMFLOAT2 position, Windows::Foundation::Rect* movementBounds) : 
 Sprite(m_Texture, size, position, movementBounds, .1, 0, XMFLOAT2(size.x / 2, size.y / 2))

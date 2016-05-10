@@ -1,5 +1,5 @@
 #pragma once
-#include "Sprite.h"
+#include "Sprite/Sprite.h"
 #include "ElectricObject.h"
 #include "MagneticObject.h"
 #include <map>

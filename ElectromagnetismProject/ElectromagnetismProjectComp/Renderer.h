@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "Direct3DBase.h"
-#include "VectorBoard.h"	// Includes VectorCell.h
-#include "Slider.h"
-#include "AppState.h"
-#include "ElectricObjectManager.h"
-#include "MagneticObject.h"
-#include "Puck.h"
+#include "Direct3DUtilities/Direct3DBase.h"
+#include "Board/VectorBoard.h"	// Includes VectorCell.h
+#include "UI/Slider.h"
+#include "Enums/AppState.h"
+#include "ChargedObjects/ElectricObjectManager.h"
+#include "ChargedObjects/MagneticObject.h"
+#include "ChargedObjects/Puck.h"
 #include <map>
 
 static int SWIPE = 5;

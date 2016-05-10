@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Sprite.h"
+#include "Sprite/Sprite.h"
 #include "DDSTextureLoader.h"
 #include <D3D11.h>
 #include "Windows.h"

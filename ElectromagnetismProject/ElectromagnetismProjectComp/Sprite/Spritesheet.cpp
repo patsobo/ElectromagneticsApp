@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Sprite.h"
+#include "Sprite/Sprite.h"
 #include "Spritesheet.h"
 
 #include <vector>
